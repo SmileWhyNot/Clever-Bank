@@ -10,8 +10,9 @@ public class Account {
     private int id;
     private final String accountNumber;
     private BigDecimal balance;
-    private final Person person;
-    private final Bank bank;
-    private List<Transaction> transactions;
+    private final int personId;
+    private final int bankId;
+    private List<Integer> transactionIds;
+
 
 }

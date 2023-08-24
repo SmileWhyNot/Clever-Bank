@@ -9,5 +9,5 @@ public class Person {
     private int id;
     private final String name;
     private final String email;
-    private List<Account> accounts;
+    private List<Integer> accountIds;
 }

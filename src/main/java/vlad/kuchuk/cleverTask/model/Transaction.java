@@ -11,6 +11,6 @@ public class Transaction {
     private final String transactionType;
     private final BigDecimal amount;
     private final Timestamp timestamp;
-    private final Account senderAccount;
-    private final Account receiverAccount;
+    private final int senderAccountId;
+    private final int receiverAccountId;
 }
