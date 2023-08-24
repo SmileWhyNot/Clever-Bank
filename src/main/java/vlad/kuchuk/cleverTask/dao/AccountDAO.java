@@ -45,6 +45,21 @@ public class AccountDAO {
         return null;
     }
 
+    // TODO JavaDoc Метод для получения счета по его номеру без блокировки
+    public Account getByAccountNumber(String accountNumber) {
+        String sql = "SELECT * FROM account WHERE account_number = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, accountNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return mapResultSetToAccount(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Получает список всех счетов для указанного пользователя.
      *
