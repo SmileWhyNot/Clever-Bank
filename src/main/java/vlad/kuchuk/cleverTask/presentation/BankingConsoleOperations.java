@@ -4,6 +4,7 @@ import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
 import vlad.kuchuk.cleverTask.service.AccountService;
 import vlad.kuchuk.cleverTask.service.PersonService;
+import vlad.kuchuk.cleverTask.service.TransactionService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.Scanner;
 public class BankingConsoleOperations {
     private final AccountService accountService;
     private final PersonService personService;
+    private final TransactionService transactionService;
 
-    public BankingConsoleOperations(AccountService accountService, PersonService personService) {
+    public BankingConsoleOperations(AccountService accountService, PersonService personService, TransactionService transactionService) {
         this.accountService = accountService;
         this.personService = personService;
+        this.transactionService = transactionService;
     }
 
     public void start() {
@@ -76,7 +79,7 @@ public class BankingConsoleOperations {
         System.out.println("Введите сумму для пополнения:");
         BigDecimal amount = scanner.nextBigDecimal();
 
-        accountService.deposit(selectedAccount.getId(), amount);
+        transactionService.depositMoney(selectedAccount.getId(), amount);
         System.out.println("Счет успешно пополнен.");
     }
 
@@ -93,7 +96,7 @@ public class BankingConsoleOperations {
         System.out.println("Введите сумму для снятия:");
         BigDecimal amount = scanner.nextBigDecimal();
 
-        accountService.withdraw(selectedAccount.getId(), amount);
+        transactionService.withdrawMoney(selectedAccount.getId(), amount);
         System.out.println("Средства успешно сняты со счета.");
     }
 
