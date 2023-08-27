@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Data
 public class Account {
@@ -15,27 +17,16 @@ public class Account {
     private List<Integer> transactionIds;
 
     // TODO JavaDoc
-    private final Object lock = new Object(); // Объект-мьютекс для блокировки счета
+    private final Lock lock = new ReentrantLock(); // Используйте ReentrantLock для блокировки
 
     // Метод для блокировки счета
     public void lock() {
-        synchronized (lock) {
-            // Блокировка счета
-            try {
-                lock.wait(); // Ждем, пока счет не будет разблокирован
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+        lock.lock(); // Блокировка счета
     }
 
     // Метод для разблокировки счета
     public void unlock() {
-        synchronized (lock) {
-            // Разблокировка счета
-            lock.notifyAll(); // Разблокируем все потоки, ожидающие блокировку
-        }
+        lock.unlock(); // Разблокировка счета
     }
-
 
 }

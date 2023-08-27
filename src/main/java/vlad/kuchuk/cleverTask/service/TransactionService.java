@@ -6,10 +6,12 @@ import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Transaction;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 
+
 /**
- * Сервисный класс для управления транзакциями.
+ * Сервисный класс для управления транзакциями (пополнение, снятие, перевод).
  */
 public class TransactionService {
     private final AccountDAO accountDAO;
@@ -60,38 +62,39 @@ public class TransactionService {
         Account senderAccount = accountDAO.getById(senderAccountId);
         Account receiverAccount = accountDAO.getByAccountNumber(receiverAccountNumber);
 
-        if (senderAccount != null && receiverAccount != null) {
-            if (senderAccount.getBalance().compareTo(amount) >= 0) {
-                try {
-                    senderAccount.lock();
-                    receiverAccount.lock();
-
-                    senderAccount.setBalance(senderAccount.getBalance().subtract(amount));
-                    receiverAccount.setBalance(receiverAccount.getBalance().add(amount));
-
-                    // Сохраняем записи о транзакции
-                    Transaction transaction = new Transaction(
-                            "Перевод",
-                            amount,
-                            new Timestamp(System.currentTimeMillis()),
-                            senderAccountId,
-                            receiverAccount.getId()
-                    );
-
-                    transactionDAO.saveTransaction(transaction);
-                } finally {
-                    senderAccount.unlock();
-                    receiverAccount.unlock();
-                }
-            }
-            else {
-                return "Транзакция отменена. Недостаточно средств";
-            }
-        } else {
+        if (senderAccount == null || receiverAccount == null) {
             return "Транзакция отменена. Счет не найден";
         }
 
-        return "Транзакция проведена успешно";
+        if (senderAccount.getBalance().compareTo(amount) < 0) {
+            return "Транзакция отменена. Недостаточно средств";
+        }
+
+        senderAccount.lock();
+        receiverAccount.lock();
+
+        try {
+            boolean isSuccessful = accountDAO.transferFunds(senderAccountId, receiverAccount.getId(), amount);
+
+            // Сохраняем записи о транзакции
+            Transaction transaction = new Transaction(
+                    new String("перевод".getBytes(), StandardCharsets.UTF_8),
+                    amount,
+                    new Timestamp(System.currentTimeMillis()),
+                    senderAccountId,
+                    receiverAccount.getId()
+            );
+
+            if (isSuccessful) {
+                transactionDAO.saveTransaction(transaction);
+                return "Транзакция проведена успешно";
+            } else {
+                return "Возникла ошибка при проведении транзакции";
+            }
+        } finally {
+            senderAccount.unlock();
+            receiverAccount.unlock();
+        }
     }
 }
 

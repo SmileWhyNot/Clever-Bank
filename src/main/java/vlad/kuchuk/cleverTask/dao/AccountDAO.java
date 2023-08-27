@@ -45,7 +45,12 @@ public class AccountDAO {
         return null;
     }
 
-    // TODO JavaDoc Метод для получения счета по его номеру без блокировки
+    /**
+     * Получает информацию о счет по его номеру
+     *
+     * @param accountNumber Содержит номер счета пользователя
+     * @return Объект счета или null, если счет не найден.
+     */
     public Account getByAccountNumber(String accountNumber) {
         String sql = "SELECT * FROM account WHERE account_number = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -95,6 +100,45 @@ public class AccountDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Переводит средства между двумя счетами в рамках одной транзакции.
+     *
+     * @param senderAccountId   Идентификатор счета отправителя.
+     * @param receiverAccountId Идентификатор счета получателя.
+     * @param amount            Сумма средств для перевода.
+     * @return true, если перевод средств успешно завершен; false в противном случае.
+     */
+    public boolean transferFunds(int senderAccountId, int receiverAccountId, BigDecimal amount) {
+        String sql = "UPDATE account SET balance = balance - ? WHERE id = ?; " +
+                     "UPDATE account SET balance = balance + ? WHERE id = ?;";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setBigDecimal(1, amount);
+            preparedStatement.setInt(2, senderAccountId);
+
+            preparedStatement.setBigDecimal(3, amount);
+            preparedStatement.setInt(4, receiverAccountId);
+
+            connection.setAutoCommit(false);
+            preparedStatement.executeUpdate();
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+            return true;
+        } catch (SQLException e) {
+            try {
+                // В случае ошибки откатываем транзакцию
+                connection.rollback();
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+            return false; // Ошибка при переводе средств
         }
     }
 

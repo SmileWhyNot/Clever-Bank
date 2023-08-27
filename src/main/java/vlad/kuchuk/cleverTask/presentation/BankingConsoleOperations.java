@@ -41,7 +41,8 @@ public class BankingConsoleOperations {
             switch (choice) {
                 case 1 -> depositFunds(currentUser, scanner);
                 case 2 -> withdrawFunds(currentUser, scanner);
-                case 3 -> {
+                case 3 -> performMoneyTransfer(currentUser, scanner);
+                case 4 -> {
                     System.out.println("Выход из системы.");
                     return;
                 }
@@ -54,16 +55,30 @@ public class BankingConsoleOperations {
         System.out.println("Выберите операцию:");
         System.out.println("1. Пополнить счет");
         System.out.println("2. Снять средства со счета");
-        System.out.println("3. Выйти");
+        System.out.println("3. Перевод средств на счет");
+        System.out.println("4. Выйти");
     }
 
 
     private Person login(Scanner scanner) {
-        // Реализация аутентификации здесь, вернуть текущего пользователя или null в случае ошибки
-        // Пример: запрос логина и пароля и проверка в базе данных
         System.out.println("Введите email:");
         String email = scanner.next();
         return personService.authenticate(email);
+    }
+
+    private Account chooseAccountToWorkWith(List<Account> userAccounts, Scanner scanner) {
+        while (true) {
+            for (int i = 0; i < userAccounts.size(); i++) {
+                System.out.println((i + 1) + ". " + userAccounts.get(i).getAccountNumber());
+            }
+
+            int accountChoice = scanner.nextInt();
+            if (accountChoice >= 1 && accountChoice <= userAccounts.size()) {
+                return userAccounts.get(accountChoice - 1);
+            } else {
+                System.out.println("Некорректный выбор счета. Попробуйте снова.");
+            }
+        }
     }
 
     private void depositFunds(Person currentUser, Scanner scanner) {
@@ -100,19 +115,24 @@ public class BankingConsoleOperations {
         System.out.println("Средства успешно сняты со счета.");
     }
 
-    private Account chooseAccountToWorkWith(List<Account> userAccounts, Scanner scanner) {
-        while (true) {
-            for (int i = 0; i < userAccounts.size(); i++) {
-                System.out.println((i + 1) + ". " + userAccounts.get(i).getAccountNumber());
-            }
-
-            int accountChoice = scanner.nextInt();
-            if (accountChoice >= 1 && accountChoice <= userAccounts.size()) {
-                return userAccounts.get(accountChoice - 1);
-            } else {
-                System.out.println("Некорректный выбор счета. Попробуйте снова.");
-            }
+    private void performMoneyTransfer(Person currentUser, Scanner scanner) {
+        List<Account> userAccounts = accountService.getAccountsByOwner(currentUser.getId());
+        if (userAccounts.isEmpty()) {
+            System.out.println("У вас нет счетов.");
+            return;
         }
+
+        System.out.println("Выберите свой счет для отправки перевода:");
+        Account senderAccount = chooseAccountToWorkWith(userAccounts, scanner);
+
+        System.out.println("Введите номер счета получателя:");
+        String receiverAccountNumber = scanner.next();
+
+        System.out.println("Введите сумму для перевода:");
+        BigDecimal amount = scanner.nextBigDecimal();
+
+        String result = transactionService.executeMoneyTransfer(senderAccount.getId(), receiverAccountNumber, amount);
+        System.out.println(result);
     }
 
 }
