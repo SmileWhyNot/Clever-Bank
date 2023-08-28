@@ -8,6 +8,9 @@ import vlad.kuchuk.cleverTask.presentation.BankingConsoleOperations;
 import vlad.kuchuk.cleverTask.service.AccountService;
 import vlad.kuchuk.cleverTask.service.PersonService;
 import vlad.kuchuk.cleverTask.service.TransactionService;
+import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
+import vlad.kuchuk.cleverTask.utils.YamlReader;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -21,6 +24,10 @@ public class Main {
         AccountService accountService = new AccountService(accountDAO);
         TransactionService transactionService = new TransactionService(accountDAO, transactionDAO);
 
+        // Запуск проверки начисления процентов
+        InterestCalculationScheduler scheduler = new InterestCalculationScheduler(accountDAO, YamlReader.getDouble("interestRate"));
+        scheduler.startInterestCalculation(1);
+
         // Создаем объект для взаимодействия с приложением
         BankingConsoleOperations bankingConsoleOperations =
                 new BankingConsoleOperations(accountService, personService, transactionService);
@@ -29,6 +36,7 @@ public class Main {
             bankingConsoleOperations.start();
         } finally {
             DatabaseConnection.closeConnection();
+            scheduler.stopInterestCalculation();
         }
     }
 }

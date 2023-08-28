@@ -5,6 +5,7 @@ import vlad.kuchuk.cleverTask.model.Person;
 import vlad.kuchuk.cleverTask.service.AccountService;
 import vlad.kuchuk.cleverTask.service.PersonService;
 import vlad.kuchuk.cleverTask.service.TransactionService;
+import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,7 +16,9 @@ public class BankingConsoleOperations {
     private final PersonService personService;
     private final TransactionService transactionService;
 
-    public BankingConsoleOperations(AccountService accountService, PersonService personService, TransactionService transactionService) {
+    public BankingConsoleOperations(AccountService accountService,
+                                    PersonService personService,
+                                    TransactionService transactionService) {
         this.accountService = accountService;
         this.personService = personService;
         this.transactionService = transactionService;

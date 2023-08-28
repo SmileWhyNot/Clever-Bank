@@ -3,6 +3,7 @@ package vlad.kuchuk.cleverTask.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,6 +13,7 @@ public class Account {
     private int id;
     private final String accountNumber;
     private BigDecimal balance;
+    private Date lastInterestCalculationDate;
     private final int personId;
     private final int bankId;
     private List<Integer> transactionIds;

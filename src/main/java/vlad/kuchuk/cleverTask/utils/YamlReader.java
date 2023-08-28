@@ -1,14 +1,14 @@
-package vlad.kuchuk.cleverTask.config;
+package vlad.kuchuk.cleverTask.utils;
 
 import java.io.InputStream;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- * Класс AppConfig используется для получения значений из YAML-файла конфигурации.
- * Он загружает конфигурацию из файла "application.yml" и предоставляет методы для доступа к значениям по ключам.
+ * Класс YamlReader используется для получения значений из YAML-файла конфигурации.
+ * Он загружает значения из файла "application.yml" и предоставляет методы для доступа к значениям по ключам.
  */
-public class AppConfig {
+public class YamlReader {
 
     /** Имя файла конфигурации. */
     private static final String CONFIG_FILE = "application.yml";
@@ -18,7 +18,7 @@ public class AppConfig {
 
     static {
         Yaml yaml = new Yaml();
-        try (InputStream in = AppConfig.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
+        try (InputStream in = YamlReader.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
             properties = yaml.load(in);
         } catch (Exception e) {
             throw new RuntimeException("Failed to load application.yml", e);
@@ -31,7 +31,13 @@ public class AppConfig {
      * @param key Ключ, по которому нужно получить значение.
      * @return Значение из конфигурации или null, если ключ не найден.
      */
-    public static String get(String key) {
+    public static String getString(String key) {
         return properties.get(key);
+    }
+
+    public static Double getDouble(String key) {
+        String value = properties.get(key);
+        Double va = Double.parseDouble(value);
+        return va;
     }
 }

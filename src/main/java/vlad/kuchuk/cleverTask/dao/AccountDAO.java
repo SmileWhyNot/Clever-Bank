@@ -3,10 +3,7 @@ package vlad.kuchuk.cleverTask.dao;
 import vlad.kuchuk.cleverTask.model.Account;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +73,21 @@ public class AccountDAO {
         List<Account> accounts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                accounts.add(mapResultSetToAccount(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accounts;
+    }
+
+    // TODO JavaDoc
+    public List<Account> getAllAccounts() {
+        String sql = "SELECT * FROM account";
+        List<Account> accounts = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 accounts.add(mapResultSetToAccount(resultSet));
@@ -159,5 +171,17 @@ public class AccountDAO {
          account.setId(resultSet.getInt("id"));
 
          return account;
+    }
+
+    public void updateLastInterestCalculationDate(int id, Date currentDate) {
+        String sql = "UPDATE account SET last_interest_calculation_date = ? WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDate(1, currentDate);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
