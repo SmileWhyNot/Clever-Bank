@@ -30,7 +30,7 @@ public class Main {
 
         // Запуск проверки начисления процентов
         InterestCalculationScheduler scheduler = new InterestCalculationScheduler(accountDAO, YamlReader.getDouble("interestRate"));
-        scheduler.startInterestCalculation(1);
+        scheduler.startInterestCalculation(30);
 
         // Создаем объект для взаимодействия с приложением
         BankingConsoleOperations bankingConsoleOperations =

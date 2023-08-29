@@ -2,8 +2,8 @@ package vlad.kuchuk.cleverTask.utils;
 
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * метод {@link #stopInterestCalculation()}.
  */
 public class InterestCalculationScheduler {
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(3);
+    private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(2);
     private final AccountDAO accountDAO;
     private final Double interestRate;
 
@@ -45,7 +45,7 @@ public class InterestCalculationScheduler {
                 interestCalculationTask,
                 0, // Начало выполнения задачи сразу
                 intervalSeconds,
-                TimeUnit.MINUTES
+                TimeUnit.SECONDS
         );
     }
 

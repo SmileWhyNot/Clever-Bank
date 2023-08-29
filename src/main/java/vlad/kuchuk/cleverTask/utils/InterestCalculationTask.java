@@ -4,33 +4,34 @@ import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.model.Account;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Класс, представляющий задачу начисления процентов на счетах пользователей
- * с учетом заданной процентной ставки.
+ * РљР»Р°СЃСЃ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ Р·Р°РґР°С‡Сѓ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ РЅР° СЃС‡РµС‚Р°С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
+ * СЃ СѓС‡РµС‚РѕРј Р·Р°РґР°РЅРЅРѕР№ РїСЂРѕС†РµРЅС‚РЅРѕР№ СЃС‚Р°РІРєРё.
  *
  * <p>
- * Этот класс реализует интерфейс {@link Runnable}, чтобы его экземпляры
- * могли быть выполнены в качестве задачи с использованием планировщика.
+ * Р­С‚РѕС‚ РєР»Р°СЃСЃ СЂРµР°Р»РёР·СѓРµС‚ РёРЅС‚РµСЂС„РµР№СЃ {@link Runnable}, С‡С‚РѕР±С‹ РµРіРѕ СЌРєР·РµРјРїР»СЏСЂС‹
+ * РјРѕРіР»Рё Р±С‹С‚СЊ РІС‹РїРѕР»РЅРµРЅС‹ РІ РєР°С‡РµСЃС‚РІРµ Р·Р°РґР°С‡Рё СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РїР»Р°РЅРёСЂРѕРІС‰РёРєР°.
  *
  * <p>
- * Для начисления процентов на счета, задача проверяет дату последнего начисления
- * процентов для каждого счета и, если прошел месяц с момента последнего начисления,
- * рассчитывает и начисляет проценты на текущий баланс счета.
+ * Р”Р»СЏ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ РЅР° СЃС‡РµС‚Р°, Р·Р°РґР°С‡Р° РїСЂРѕРІРµСЂСЏРµС‚ РґР°С‚Сѓ РїРѕСЃР»РµРґРЅРµРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ
+ * РїСЂРѕС†РµРЅС‚РѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЃС‡РµС‚Р° Рё, РµСЃР»Рё РїСЂРѕС€РµР» РјРµСЃСЏС† СЃ РјРѕРјРµРЅС‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ,
+ * СЂР°СЃСЃС‡РёС‚С‹РІР°РµС‚ Рё РЅР°С‡РёСЃР»СЏРµС‚ РїСЂРѕС†РµРЅС‚С‹ РЅР° С‚РµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ СЃС‡РµС‚Р°.
  */
 public class InterestCalculationTask implements Runnable{
 
     private final AccountDAO accountDAO;
-    private final Double interestRate; // Значение процентов из конфигурационного файла
+    private final Double interestRate; // Р—РЅР°С‡РµРЅРёРµ РїСЂРѕС†РµРЅС‚РѕРІ РёР· РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРіРѕ С„Р°Р№Р»Р°
 
     /**
-     * Конструктор класса.
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.
      *
-     * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
-     * @param interestRate Значение процентной ставки для начисления процентов.
+     * @param accountDAO   РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° AccountDAO РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј СЃС‡РµС‚РѕРІ.
+     * @param interestRate Р—РЅР°С‡РµРЅРёРµ РїСЂРѕС†РµРЅС‚РЅРѕР№ СЃС‚Р°РІРєРё РґР»СЏ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ.
      */
     public InterestCalculationTask(AccountDAO accountDAO, Double interestRate) {
         this.accountDAO = accountDAO;
@@ -38,15 +39,14 @@ public class InterestCalculationTask implements Runnable{
     }
 
     /**
-     * Выполняет задачу начисления процентов на счетах пользователей.
-     * Задача проверяет дату последнего начисления процентов для каждого счета
-     * и, если прошел месяц с момента последнего начисления, рассчитывает и начисляет
-     * проценты на текущий баланс счета.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ Р·Р°РґР°С‡Сѓ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ РЅР° СЃС‡РµС‚Р°С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№.
+     * Р—Р°РґР°С‡Р° РїСЂРѕРІРµСЂСЏРµС‚ РґР°С‚Сѓ РїРѕСЃР»РµРґРЅРµРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЃС‡РµС‚Р°
+     * Рё, РµСЃР»Рё РїСЂРѕС€РµР» РјРµСЃСЏС† СЃ РјРѕРјРµРЅС‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ, СЂР°СЃСЃС‡РёС‚С‹РІР°РµС‚ Рё РЅР°С‡РёСЃР»СЏРµС‚
+     * РїСЂРѕС†РµРЅС‚С‹ РЅР° С‚РµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ СЃС‡РµС‚Р°.
      */
     @Override
     public void run() {
         List<Account> accounts = accountDAO.getAllAccounts();
-
         Date currentDate = new Date();
 
         for (Account account : accounts) {
@@ -54,13 +54,14 @@ public class InterestCalculationTask implements Runnable{
 
             Date lastInterestCalculationDate = account.getLastInterestCalculationDate();
 
+            System.out.println(lastInterestCalculationDate);
             try {
-                if (!isSameMonth(lastInterestCalculationDate, currentDate)) {
-                    // Рассчитайте начисление процентов
+                if (lastInterestCalculationDate == null || !isSameMonth(lastInterestCalculationDate, currentDate)) {
+                    // Р Р°СЃСЃС‡РёС‚Р°Р№С‚Рµ РЅР°С‡РёСЃР»РµРЅРёРµ РїСЂРѕС†РµРЅС‚РѕРІ
                     BigDecimal currentBalance = account.getBalance();
                     BigDecimal interest = currentBalance.multiply(BigDecimal.valueOf(interestRate));
 
-                    // Обновите баланс с учетом начисления процентов
+                    // РћР±РЅРѕРІРёС‚Рµ Р±Р°Р»Р°РЅСЃ СЃ СѓС‡РµС‚РѕРј РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ
                     BigDecimal newBalance = currentBalance.add(interest);
                     accountDAO.updateBalance(account.getId(), newBalance);
 
@@ -68,9 +69,9 @@ public class InterestCalculationTask implements Runnable{
                     java.sql.Date curSQLDate = new java.sql.Date(currentDate.getTime());
                     accountDAO.updateLastInterestCalculationDate(account.getId(), curSQLDate);
 
-                    // Логируйте начисление процентов
-                    System.out.println("Начисление процентов для счета " + account.getAccountNumber() +
-                            ": " + interest + " (Итоговый баланс: " + newBalance + ")");
+                    // Р›РѕРіРёСЂСѓР№С‚Рµ РЅР°С‡РёСЃР»РµРЅРёРµ РїСЂРѕС†РµРЅС‚РѕРІ
+                    System.out.println("РќР°С‡РёСЃР»РµРЅРёРµ РїСЂРѕС†РµРЅС‚РѕРІ РґР»СЏ СЃС‡РµС‚Р° " + account.getAccountNumber() +
+                            ": " + interest + " (РС‚РѕРіРѕРІС‹Р№ Р±Р°Р»Р°РЅСЃ: " + newBalance + ")");
                 }
 
             } finally {
@@ -80,11 +81,11 @@ public class InterestCalculationTask implements Runnable{
     }
 
     /**
-     * Проверяет, являются ли две даты одним и тем же месяцем и годом.
+     * РџСЂРѕРІРµСЂСЏРµС‚, СЏРІР»СЏСЋС‚СЃСЏ Р»Рё РґРІРµ РґР°С‚С‹ РѕРґРЅРёРј Рё С‚РµРј Р¶Рµ РјРµСЃСЏС†РµРј Рё РіРѕРґРѕРј.
      *
-     * @param date1 Первая дата для сравнения.
-     * @param date2 Вторая дата для сравнения.
-     * @return true, если даты принадлежат одному месяцу и году, в противном случае - false.
+     * @param date1 РџРµСЂРІР°СЏ РґР°С‚Р° РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ.
+     * @param date2 Р’С‚РѕСЂР°СЏ РґР°С‚Р° РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ.
+     * @return true, РµСЃР»Рё РґР°С‚С‹ РїСЂРёРЅР°РґР»РµР¶Р°С‚ РѕРґРЅРѕРјСѓ РјРµСЃСЏС†Сѓ Рё РіРѕРґСѓ, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ - false.
      */
     private boolean isSameMonth(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
