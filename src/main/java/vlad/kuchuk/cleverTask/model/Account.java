@@ -8,6 +8,21 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Класс, представляющий счет в банковской системе.
+ *
+ * <p>
+ * Каждый счет имеет уникальный номер, баланс, дату последнего начисления процентов,
+ * идентификатор владельца счета (personId), идентификатор банка (bankId) и список
+ * идентификаторов транзакций, связанных с этим счетом.
+ *
+ * <p>
+ * Счет может быть заблокирован или разблокирован для выполнения операций.
+ * Для блокировки и разблокировки счета используются механизмы блокировки.
+ *
+ * @see Lock
+ * @see ReentrantLock
+ */
 @Data
 public class Account {
     private int id;
@@ -18,17 +33,14 @@ public class Account {
     private final int bankId;
     private List<Integer> transactionIds;
 
-    // TODO JavaDoc
-    private final Lock lock = new ReentrantLock(); // Используйте ReentrantLock для блокировки
+    private final Lock lock = new ReentrantLock();
 
-    // Метод для блокировки счета
     public void lock() {
-        lock.lock(); // Блокировка счета
+        lock.lock();
     }
 
-    // Метод для разблокировки счета
     public void unlock() {
-        lock.unlock(); // Разблокировка счета
+        lock.unlock();
     }
 
 }

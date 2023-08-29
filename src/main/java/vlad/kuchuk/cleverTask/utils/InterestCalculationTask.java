@@ -8,16 +8,41 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс, представляющий задачу начисления процентов на счетах пользователей
+ * с учетом заданной процентной ставки.
+ *
+ * <p>
+ * Этот класс реализует интерфейс {@link Runnable}, чтобы его экземпляры
+ * могли быть выполнены в качестве задачи с использованием планировщика.
+ *
+ * <p>
+ * Для начисления процентов на счета, задача проверяет дату последнего начисления
+ * процентов для каждого счета и, если прошел месяц с момента последнего начисления,
+ * рассчитывает и начисляет проценты на текущий баланс счета.
+ */
 public class InterestCalculationTask implements Runnable{
 
     private final AccountDAO accountDAO;
     private final Double interestRate; // Значение процентов из конфигурационного файла
 
+    /**
+     * Конструктор класса.
+     *
+     * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
+     * @param interestRate Значение процентной ставки для начисления процентов.
+     */
     public InterestCalculationTask(AccountDAO accountDAO, Double interestRate) {
         this.accountDAO = accountDAO;
         this.interestRate = interestRate;
     }
 
+    /**
+     * Выполняет задачу начисления процентов на счетах пользователей.
+     * Задача проверяет дату последнего начисления процентов для каждого счета
+     * и, если прошел месяц с момента последнего начисления, рассчитывает и начисляет
+     * проценты на текущий баланс счета.
+     */
     @Override
     public void run() {
         List<Account> accounts = accountDAO.getAllAccounts();
@@ -54,6 +79,13 @@ public class InterestCalculationTask implements Runnable{
         }
     }
 
+    /**
+     * Проверяет, являются ли две даты одним и тем же месяцем и годом.
+     *
+     * @param date1 Первая дата для сравнения.
+     * @param date2 Вторая дата для сравнения.
+     * @return true, если даты принадлежат одному месяцу и году, в противном случае - false.
+     */
     private boolean isSameMonth(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();

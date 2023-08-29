@@ -9,34 +9,47 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Класс, предназначенный для генерации и сохранения банковских чеков в файлы.
+ *
+ * <p>
+ * Для каждой операции создается уникальный чек в формате текстового файла. Чек
+ * содержит информацию о типе транзакции, банках отправителя и получателя,
+ * номерах счетов отправителя и получателя, сумме и времени совершения
+ * транзакции.
+ */
 public class CheckGenerator {
 
+    /**
+     * Генерирует и сохраняет чек для банковской операции.
+     *
+     * @param transactionType Тип транзакции, например, "перевод", "пополнение", "снятие".
+     * @param senderBank      Название банка отправителя.
+     * @param receiverBank    Название банка получателя.
+     * @param senderAccount   Номер счета отправителя.
+     * @param receiverAccount Номер счета получателя.
+     * @param amount          Сумма, связанная с транзакцией.
+     */
     public static void generateCheck(String transactionType, String senderBank,
                                      String receiverBank, String senderAccount,
                                      String receiverAccount, BigDecimal amount) {
 
-        // Создаем уникальный номер чека, например, на основе текущей даты и времени
         String checkNumber = generateCheckNumber();
 
-        // Получаем текущую дату и время
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Date currentDate = new Date();
 
-        // Путь к директории "check"
         String directoryPath = "check";
 
         try {
-            // Создаем директорию, если она не существует
             File directory = new File(directoryPath);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
-            // Открываем файл для записи чека
             BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath + "/" + checkNumber + ".txt"));
 
-            // Записываем данные в чек
             writer.write("-------------------------------------------------------------");
             writer.newLine();
             writer.write("|                      Банковский Чек                        |");
@@ -59,7 +72,6 @@ public class CheckGenerator {
             writer.newLine();
             writer.write("-------------------------------------------------------------");
 
-            // Закрываем файл
             writer.close();
 
             System.out.println("Чек успешно сформирован и сохранен.");
@@ -68,9 +80,12 @@ public class CheckGenerator {
         }
     }
 
+    /**
+     * Генерирует уникальный номер чека на основе текущей даты и времени.
+     *
+     * @return Уникальный номер чека.
+     */
     private static String generateCheckNumber() {
-        // Здесь можно реализовать генерацию уникального номера чека
-        // Например, на основе текущей даты и времени
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         Date currentDate = new Date();
         return dateFormat.format(currentDate);

@@ -35,9 +35,15 @@ public class YamlReader {
         return properties.get(key);
     }
 
+    /**
+     * Получает значение из конфигурации по указанному ключу и преобразует его в тип {@code Double}.
+     *
+     * @param key Ключ, по которому нужно получить значение.
+     * @return Значение из конфигурации преобразованное в тип {@code Double}, или null, если ключ не найден или значение не может быть преобразовано в {@code Double}.
+     * @throws NumberFormatException Если значение в конфигурации не может быть корректно преобразовано в тип {@code Double}.
+     */
     public static Double getDouble(String key) {
         String value = properties.get(key);
-        Double va = Double.parseDouble(value);
-        return va;
+        return Double.parseDouble(value);
     }
 }

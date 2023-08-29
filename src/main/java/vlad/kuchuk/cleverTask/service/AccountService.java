@@ -1,12 +1,8 @@
 package vlad.kuchuk.cleverTask.service;
 
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
-import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.model.Account;
-import vlad.kuchuk.cleverTask.model.Transaction;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -34,7 +30,13 @@ public class AccountService {
         return accountDAO.getAllAccountsForUser(id);
     }
 
-    public Account getAccountsByNumber(String receiverAccountNumber) {
-        return accountDAO.getByAccountNumber(receiverAccountNumber);
+    /**
+     * Получает всю информацию о счете по его номеру
+     *
+     * @param accountNumber Номер счета в банке
+     * @return Всю информацию об этом счете
+     */
+    public Account getAccountDataByNumber(String accountNumber) {
+        return accountDAO.getByAccountNumber(accountNumber);
     }
 }

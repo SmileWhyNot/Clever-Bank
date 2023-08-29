@@ -150,7 +150,7 @@ public class BankingConsoleOperations {
         String result = transactionService.executeMoneyTransfer(senderAccount.getId(), receiverAccountNumber, amount);
 
         String senderBankName = bankService.getBankNameByAccountNumber(senderAccount.getAccountNumber());
-        Account receiverAccount = accountService.getAccountsByNumber(receiverAccountNumber);
+        Account receiverAccount = accountService.getAccountDataByNumber(receiverAccountNumber);
         String receiverBankName = bankService.getBankNameByAccountNumber(receiverAccount.getAccountNumber());
 
         CheckGenerator.generateCheck("Перевод", senderBankName, receiverBankName,

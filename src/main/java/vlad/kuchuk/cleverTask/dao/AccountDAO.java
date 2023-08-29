@@ -83,7 +83,11 @@ public class AccountDAO {
         return accounts;
     }
 
-    // TODO JavaDoc
+    /**
+     * Получает список всех счетов из БД
+     *
+     * @return Список счетов пользователей
+     */
     public List<Account> getAllAccounts() {
         String sql = "SELECT * FROM account";
         List<Account> accounts = new ArrayList<>();
@@ -109,6 +113,24 @@ public class AccountDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setBigDecimal(1, newBalance);
             preparedStatement.setInt(2, accountId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Обновляет значение даты последнего начисления процентов по балансу
+     *
+     * @param id Идентификатор счета
+     * @param currentDate Значение текущей даты
+     */
+    public void updateLastInterestCalculationDate(int id, Date currentDate) {
+        String sql = "UPDATE account SET last_interest_calculation_date = ? WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDate(1, currentDate);
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,17 +193,5 @@ public class AccountDAO {
          account.setId(resultSet.getInt("id"));
 
          return account;
-    }
-
-    public void updateLastInterestCalculationDate(int id, Date currentDate) {
-        String sql = "UPDATE account SET last_interest_calculation_date = ? WHERE id = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setDate(1, currentDate);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
