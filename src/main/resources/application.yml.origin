@@ -2,3 +2,4 @@
 url: ## here your DB url like jdbc:postgresql://localhost:5432/Example
 user: ## here your DB username, default=postgres
 password: ## here your DB password, default=postgres
+interestRate: "0.01"

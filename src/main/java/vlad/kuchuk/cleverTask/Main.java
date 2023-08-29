@@ -13,7 +13,7 @@ import vlad.kuchuk.cleverTask.service.TransactionService;
 import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
 import vlad.kuchuk.cleverTask.utils.YamlReader;
 
-
+// TODO JavaDoc
 public class Main {
     public static void main(String[] args) {
         // Создаем DAO классы
