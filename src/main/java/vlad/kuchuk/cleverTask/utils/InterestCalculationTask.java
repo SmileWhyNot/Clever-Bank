@@ -46,6 +46,7 @@ public class InterestCalculationTask implements Runnable{
      */
     @Override
     public void run() {
+        int updatedAccounts = 0;
         List<Account> accounts = accountDAO.getAllAccounts();
         Date currentDate = new Date();
 
@@ -54,7 +55,6 @@ public class InterestCalculationTask implements Runnable{
 
             Date lastInterestCalculationDate = account.getLastInterestCalculationDate();
 
-            System.out.println(lastInterestCalculationDate);
             try {
                 if (lastInterestCalculationDate == null || !isSameMonth(lastInterestCalculationDate, currentDate)) {
                     // Рассчитайте начисление процентов
@@ -72,11 +72,18 @@ public class InterestCalculationTask implements Runnable{
                     // Логируйте начисление процентов
                     System.out.println("Начисление процентов для счета " + account.getAccountNumber() +
                             ": " + interest + " (Итоговый баланс: " + newBalance + ")");
+                    updatedAccounts++;
                 }
 
             } finally {
                 account.unlock();
             }
+        }
+
+        if (updatedAccounts == 0) {
+            System.out.println("На всех счетах уже начислены проценты");
+        } else {
+            System.out.println("Проценты были начислены для " + updatedAccounts + " аккаунтов");
         }
     }
 

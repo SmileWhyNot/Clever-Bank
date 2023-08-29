@@ -190,6 +190,7 @@ public class AccountDAO {
                 resultSet.getInt("bank_id")
         );
          account.setBalance(resultSet.getBigDecimal("balance"));
+         account.setLastInterestCalculationDate(resultSet.getDate("last_interest_calculation_date"));
          account.setId(resultSet.getInt("id"));
 
          return account;
