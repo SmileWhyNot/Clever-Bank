@@ -1,6 +1,7 @@
 package vlad.kuchuk.cleverTask.utils;
 
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
+import vlad.kuchuk.cleverTask.dao.BankDAO;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -19,16 +20,19 @@ import java.util.concurrent.TimeUnit;
 public class InterestCalculationScheduler {
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(2);
     private final AccountDAO accountDAO;
+    private final BankDAO bankDAO;
     private final Double interestRate;
 
     /**
      * Конструктор класса.
      *
      * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
+     * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
      * @param interestRate Значение процентной ставки для начисления процентов.
      */
-    public InterestCalculationScheduler(AccountDAO accountDAO, Double interestRate) {
+    public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO, Double interestRate) {
         this.accountDAO = accountDAO;
+        this.bankDAO = bankDAO;
         this.interestRate = interestRate;
     }
 
@@ -38,7 +42,7 @@ public class InterestCalculationScheduler {
      * @param intervalSeconds Интервал в секундах между начислениями процентов.
      */
     public void startInterestCalculation(int intervalSeconds) {
-        Runnable interestCalculationTask = new InterestCalculationTask(accountDAO, interestRate);
+        Runnable interestCalculationTask = new InterestCalculationTask(accountDAO, bankDAO, interestRate);
 
         // Запускаем задачу начисления процентов с интервалом в полминуты
         scheduler.scheduleAtFixedRate(

@@ -29,7 +29,7 @@ public class Main {
         BankService bankService = new BankService(bankDAO);
 
         // Запуск проверки начисления процентов
-        InterestCalculationScheduler scheduler = new InterestCalculationScheduler(accountDAO, YamlReader.getDouble("interestRate"));
+        InterestCalculationScheduler scheduler = new InterestCalculationScheduler(accountDAO, bankDAO, YamlReader.getDouble("interestRate"));
         scheduler.startInterestCalculation(30);
 
         // Создаем объект для взаимодействия с приложением

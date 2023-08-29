@@ -1,10 +1,11 @@
 package vlad.kuchuk.cleverTask.utils;
 
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
+import vlad.kuchuk.cleverTask.dao.BankDAO;
 import vlad.kuchuk.cleverTask.model.Account;
+import vlad.kuchuk.cleverTask.model.Bank;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,16 +26,19 @@ import java.util.List;
 public class InterestCalculationTask implements Runnable{
 
     private final AccountDAO accountDAO;
+    private final BankDAO bankDAO;
     private final Double interestRate; // Значение процентов из конфигурационного файла
 
     /**
      * Конструктор класса.
      *
      * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
+     * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
      * @param interestRate Значение процентной ставки для начисления процентов.
      */
-    public InterestCalculationTask(AccountDAO accountDAO, Double interestRate) {
+    public InterestCalculationTask(AccountDAO accountDAO, BankDAO bankDAO, Double interestRate) {
         this.accountDAO = accountDAO;
+        this.bankDAO = bankDAO;
         this.interestRate = interestRate;
     }
 
@@ -64,6 +68,11 @@ public class InterestCalculationTask implements Runnable{
                     // Обновите баланс с учетом начисления процентов
                     BigDecimal newBalance = currentBalance.add(interest);
                     accountDAO.updateBalance(account.getId(), newBalance);
+
+                    Bank personsBank = bankDAO.getBankNameByAccountNumber(account.getAccountNumber());
+                    CheckGenerator.generateCheck("Пополнение", personsBank.getName()
+                            , personsBank.getName(), account.getAccountNumber()
+                            , account.getAccountNumber(), interest);
 
                     account.setLastInterestCalculationDate(currentDate);
                     java.sql.Date curSQLDate = new java.sql.Date(currentDate.getTime());
