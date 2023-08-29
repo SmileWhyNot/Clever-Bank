@@ -33,4 +33,8 @@ public class AccountService {
     public List<Account> getAccountsByOwner(int id) {
         return accountDAO.getAllAccountsForUser(id);
     }
+
+    public Account getAccountsByNumber(String receiverAccountNumber) {
+        return accountDAO.getByAccountNumber(receiverAccountNumber);
+    }
 }

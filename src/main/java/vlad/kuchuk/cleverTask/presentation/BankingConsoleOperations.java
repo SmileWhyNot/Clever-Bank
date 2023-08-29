@@ -3,9 +3,11 @@ package vlad.kuchuk.cleverTask.presentation;
 import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
 import vlad.kuchuk.cleverTask.service.AccountService;
+import vlad.kuchuk.cleverTask.service.BankService;
 import vlad.kuchuk.cleverTask.service.PersonService;
 import vlad.kuchuk.cleverTask.service.TransactionService;
-import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
+import vlad.kuchuk.cleverTask.utils.CheckGenerator;
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,13 +17,16 @@ public class BankingConsoleOperations {
     private final AccountService accountService;
     private final PersonService personService;
     private final TransactionService transactionService;
+    private final BankService bankService;
 
     public BankingConsoleOperations(AccountService accountService,
                                     PersonService personService,
-                                    TransactionService transactionService) {
+                                    TransactionService transactionService,
+                                    BankService bankService) {
         this.accountService = accountService;
         this.personService = personService;
         this.transactionService = transactionService;
+        this.bankService = bankService;
     }
 
     public void start() {
@@ -98,6 +103,10 @@ public class BankingConsoleOperations {
         BigDecimal amount = scanner.nextBigDecimal();
 
         transactionService.depositMoney(selectedAccount.getId(), amount);
+
+        String senderBankName = bankService.getBankNameByAccountNumber(selectedAccount.getAccountNumber());
+        CheckGenerator.generateCheck("Пополнение", senderBankName, senderBankName,
+                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount);
         System.out.println("Счет успешно пополнен.");
     }
 
@@ -115,6 +124,10 @@ public class BankingConsoleOperations {
         BigDecimal amount = scanner.nextBigDecimal();
 
         transactionService.withdrawMoney(selectedAccount.getId(), amount);
+
+        String senderBankName = bankService.getBankNameByAccountNumber(selectedAccount.getAccountNumber());
+        CheckGenerator.generateCheck("Снятие", senderBankName, senderBankName,
+                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount);
         System.out.println("Средства успешно сняты со счета.");
     }
 
@@ -135,6 +148,13 @@ public class BankingConsoleOperations {
         BigDecimal amount = scanner.nextBigDecimal();
 
         String result = transactionService.executeMoneyTransfer(senderAccount.getId(), receiverAccountNumber, amount);
+
+        String senderBankName = bankService.getBankNameByAccountNumber(senderAccount.getAccountNumber());
+        Account receiverAccount = accountService.getAccountsByNumber(receiverAccountNumber);
+        String receiverBankName = bankService.getBankNameByAccountNumber(receiverAccount.getAccountNumber());
+
+        CheckGenerator.generateCheck("Перевод", senderBankName, receiverBankName,
+                senderAccount.getAccountNumber(), receiverAccount.getAccountNumber(), amount);
         System.out.println(result);
     }
 
