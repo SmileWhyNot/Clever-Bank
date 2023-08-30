@@ -43,6 +43,17 @@ public class BankingConsoleOperations {
         }
     }
 
+    public void start(Scanner scanner) {
+        Person currentUser = login(scanner);
+
+        if (currentUser != null) {
+            System.out.println("Добро пожаловать, " + currentUser.getName() + "!");
+            handleUserOperations(currentUser, scanner);
+        } else {
+            System.out.println("Ошибка аутентификации. Попробуйте снова или выйдите из системы.");
+        }
+    }
+
     private void handleUserOperations(Person currentUser, Scanner scanner) {
         while (true) {
             displayUserMenu();

@@ -11,25 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseConnectionTest {
 
-    // ѕеред каждым тестом убедимс€, что соединение закрыто
     @BeforeEach
     public void setUp() {
         DatabaseConnection.closeConnection();
     }
 
-    // ѕосле каждого теста убедимс€, что соединение закрыто
     @AfterEach
     public void tearDown() {
         DatabaseConnection.closeConnection();
     }
 
     @Test
+    // ѕри запуске совместно со всеми тестами
+    // Ётот тест проваливаетс€
+    // ќтдельно проверка подключени€ работает корректно
     public void testGetConnection() {
-        // ѕроверим, что получаемое соединение не null
         Connection connection = DatabaseConnection.getConnection();
         assertNotNull(connection);
 
-        // ѕроверим, что получаемое соединение работает (например, выполним запрос)
         try {
             assertTrue(connection.isValid(1));
         } catch (SQLException e) {
@@ -39,7 +38,6 @@ public class DatabaseConnectionTest {
 
     @Test
     public void testCloseConnection() {
-        // ”бедимс€, что после закрыти€ соединени€, оно больше не €вл€етс€ действительным
         Connection connection = DatabaseConnection.getConnection();
         assertNotNull(connection);
 
@@ -48,7 +46,7 @@ public class DatabaseConnectionTest {
         try {
             assertFalse(connection.isValid(1));
         } catch (SQLException e) {
-            // ќжидаетс€, что после закрыти€ соединени€ будет SQLException
+            e.printStackTrace();
         }
     }
 }

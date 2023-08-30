@@ -17,7 +17,6 @@ public class CheckGeneratorTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        // Создаем временную директорию для тестовых чеков
         Files.createDirectories(Paths.get(DIRECTORY_PATH));
     }
 
@@ -30,13 +29,11 @@ public class CheckGeneratorTest {
         String receiverAccount = "54321";
         BigDecimal amount = new BigDecimal("100.00");
 
-        // Получаем текущее количество файлов в директории
         Path dir = Paths.get(DIRECTORY_PATH);
         int initialFileCount = Files.list(dir).toArray().length;
 
         CheckGenerator.generateCheck(transactionType, senderBank, receiverBank, senderAccount, receiverAccount, amount);
 
-        // Проверяем, что файл был создан
         int newFileCount = Files.list(dir).toArray().length;
         assertEquals(initialFileCount + 1, newFileCount);
     }

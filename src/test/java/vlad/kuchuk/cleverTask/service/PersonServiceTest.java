@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import vlad.kuchuk.cleverTask.dao.PersonDAO;
 import vlad.kuchuk.cleverTask.model.Person;
-import vlad.kuchuk.cleverTask.service.PersonService;
 
 public class PersonServiceTest {
 
@@ -48,8 +47,6 @@ public class PersonServiceTest {
 
         assertNull(result);
     }
-
-    // ƒополнительные тесты можно добавить здесь
 
 }
 
