@@ -44,6 +44,6 @@ public class YamlReader {
      */
     public static Double getDouble(String key) {
         String value = properties.get(key);
-        return Double.parseDouble(value);
+        return value != null ? Double.parseDouble(value) : null;
     }
 }

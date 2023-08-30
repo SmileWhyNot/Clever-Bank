@@ -68,6 +68,7 @@ public class InterestCalculationTask implements Runnable{
                     // Обновите баланс с учетом начисления процентов
                     BigDecimal newBalance = currentBalance.add(interest);
                     accountDAO.updateBalance(account.getId(), newBalance);
+                    account.setBalance(newBalance);
 
                     Bank personsBank = bankDAO.getBankNameByAccountNumber(account.getAccountNumber());
                     CheckGenerator.generateCheck("Пополнение", personsBank.getName()

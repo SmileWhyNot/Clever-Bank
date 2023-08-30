@@ -37,6 +37,7 @@ public class TransactionService {
     public void depositMoney(int accountId, BigDecimal amount) {
         Account account = accountDAO.getById(accountId);
         accountDAO.updateBalance(accountId, account.getBalance().add(amount));
+        account.setBalance(account.getBalance().add(amount));
     }
 
     /**
@@ -48,6 +49,7 @@ public class TransactionService {
     public void withdrawMoney(int accountId, BigDecimal amount) {
         Account account = accountDAO.getById(accountId);
         accountDAO.updateBalance(accountId, account.getBalance().subtract(amount));
+        account.setBalance(account.getBalance().subtract(amount));
     }
 
     /**
@@ -86,6 +88,8 @@ public class TransactionService {
             );
 
             if (isSuccessful) {
+                senderAccount.setBalance(senderAccount.getBalance().subtract(amount));
+                receiverAccount.setBalance(receiverAccount.getBalance().add(amount));
                 transactionDAO.saveTransaction(transaction);
                 return "Транзакция проведена успешно";
             } else {
