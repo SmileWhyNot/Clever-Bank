@@ -5,8 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
-import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.model.Account;
-import vlad.kuchuk.cleverTask.service.TransactionService;
 
 public class TransactionServiceTest {
 
@@ -25,9 +21,6 @@ public class TransactionServiceTest {
 
     @Mock
     private AccountDAO accountDAO;
-
-    @Mock
-    private TransactionDAO transactionDAO;
 
     @BeforeEach
     public void setUp() {
@@ -137,7 +130,6 @@ public class TransactionServiceTest {
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
         assertEquals("Возникла ошибка при проведении транзакции", resultUTF8);
     }
-
 
 }
 
