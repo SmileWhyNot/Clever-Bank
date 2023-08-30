@@ -29,6 +29,12 @@ dependencies {
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation 'org.yaml:snakeyaml:2.1'
 
+    // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
 }
 
 test {

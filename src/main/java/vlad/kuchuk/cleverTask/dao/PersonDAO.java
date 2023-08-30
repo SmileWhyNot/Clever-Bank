@@ -1,11 +1,14 @@
 package vlad.kuchuk.cleverTask.dao;
 
+import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс, предоставляющий доступ к данным о пользователях банков в базе данных.
@@ -21,6 +24,37 @@ public class PersonDAO {
      */
     public PersonDAO(Connection connection) {
         this.connection = connection;
+    }
+
+
+    // TODO JavaDoc
+    public List<Person> getAllPeople() {
+        String sql = "SELECT * FROM person";
+        List<Person> people = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                people.add(mapResultSetToPerson(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return people;
+    }
+
+    // TODO JavaDoc
+    public Person getPersonById(int personId) {
+        String sql = "SELECT * FROM person WHERE id = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, personId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return mapResultSetToPerson(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -41,6 +75,64 @@ public class PersonDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // TODO JavaDoc
+    public void addPerson(Person newPerson) {
+        String sql = "INSERT INTO person (name, email) VALUES (?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newPerson.getName());
+            preparedStatement.setString(2, newPerson.getEmail());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Person added successfully.");
+            } else {
+                System.err.println("Failed to add person.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //TODO JavaDoc
+    public void updatePerson(Person updatedPerson, int personId) {
+        String sql = "UPDATE person SET name = ?, email = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, updatedPerson.getName());
+            preparedStatement.setString(2, updatedPerson.getEmail());
+            preparedStatement.setInt(3, personId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Person updated successfully.");
+            } else {
+                System.err.println("Failed to update person.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // TODO JavaDoc
+    public void deletePersonById(int personId) {
+        String sql = "DELETE FROM person WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, personId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Person deleted successfully.");
+            } else {
+                System.err.println("No person found with id: " + personId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
