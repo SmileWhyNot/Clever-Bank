@@ -13,8 +13,17 @@ import vlad.kuchuk.cleverTask.service.TransactionService;
 import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
 import vlad.kuchuk.cleverTask.utils.YamlReader;
 
-// TODO JavaDoc
+/**
+ * Главный класс приложения, который запускает его и управляет основными компонентами.
+ * Включает в себя инициализацию DAO классов, настройку сервисов и запуск задачи начисления процентов.
+ * После выполнения основной логики приложения закрывает соединение с базой данных и останавливает задачу.
+ */
 public class Main {
+    /**
+     * Метод main, который запускает консольное приложение.
+     *
+     * @param args Аргументы командной строки (не используются).
+     */
     public static void main(String[] args) {
         // Создаем DAO классы
         PersonDAO personDAO = new PersonDAO(DatabaseConnection.getConnection());
