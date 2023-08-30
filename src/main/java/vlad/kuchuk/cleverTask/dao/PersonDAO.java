@@ -27,7 +27,11 @@ public class PersonDAO {
     }
 
 
-    // TODO JavaDoc
+    /**
+     * Получает список всех людей из базы данных.
+     *
+     * @return Список объектов Person, представляющих всех людей.
+     */
     public List<Person> getAllPeople() {
         String sql = "SELECT * FROM person";
         List<Person> people = new ArrayList<>();
@@ -42,7 +46,12 @@ public class PersonDAO {
         return people;
     }
 
-    // TODO JavaDoc
+    /**
+     * Получает информацию о человеке по его идентификатору.
+     *
+     * @param personId Идентификатор человека.
+     * @return Объект Person, представляющий информацию о человеке, или null, если человек с указанным идентификатором не найден.
+     */
     public Person getPersonById(int personId) {
         String sql = "SELECT * FROM person WHERE id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -77,7 +86,11 @@ public class PersonDAO {
         return null;
     }
 
-    // TODO JavaDoc
+    /**
+     * Добавляет нового человека в базу данных.
+     *
+     * @param newPerson Объект Person, представляющий нового человека.
+     */
     public void addPerson(Person newPerson) {
         String sql = "INSERT INTO person (name, email) VALUES (?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -97,7 +110,12 @@ public class PersonDAO {
     }
 
 
-    //TODO JavaDoc
+    /**
+     * Обновляет информацию о человеке по его идентификатору.
+     *
+     * @param updatedPerson Объект Person, представляющий обновленную информацию о человеке.
+     * @param personId     Идентификатор человека, информацию о котором нужно обновить.
+     */
     public void updatePerson(Person updatedPerson, int personId) {
         String sql = "UPDATE person SET name = ?, email = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -117,7 +135,11 @@ public class PersonDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Удаляет человека из базы данных по его идентификатору.
+     *
+     * @param personId Идентификатор человека, которого нужно удалить.
+     */
     public void deletePersonById(int personId) {
         String sql = "DELETE FROM person WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
