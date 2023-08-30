@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * метод {@link #stopInterestCalculation()}.
  */
 public class InterestCalculationScheduler {
-    private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(2);
+    private ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(2);
     private final AccountDAO accountDAO;
     private final BankDAO bankDAO;
     private final Double interestRate;
@@ -34,6 +34,14 @@ public class InterestCalculationScheduler {
         this.accountDAO = accountDAO;
         this.bankDAO = bankDAO;
         this.interestRate = interestRate;
+    }
+
+    public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO,
+                                        Double interestRate, ScheduledExecutorService scheduler) {
+        this.accountDAO = accountDAO;
+        this.bankDAO = bankDAO;
+        this.interestRate = interestRate;
+        this.scheduler = scheduler;
     }
 
     /**
