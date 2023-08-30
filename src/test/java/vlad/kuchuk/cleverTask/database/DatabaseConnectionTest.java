@@ -22,6 +22,9 @@ public class DatabaseConnectionTest {
     }
 
     @Test
+    // При запуске совместно со всеми тестами
+    // Этот тест проваливается
+    // Отдельно проверка подключения работает корректно
     public void testGetConnection() {
         Connection connection = DatabaseConnection.getConnection();
         assertNotNull(connection);

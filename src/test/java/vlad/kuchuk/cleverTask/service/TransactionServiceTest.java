@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
+import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.model.Account;
 
 public class TransactionServiceTest {
@@ -22,12 +23,14 @@ public class TransactionServiceTest {
     @Mock
     private AccountDAO accountDAO;
 
+    @Mock
+    private TransactionDAO transactionDAO;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
-    // TODO Тесты ниже не работают
     @Test
     public void testDepositMoney() {
         String accountNumber = "12345";
@@ -130,6 +133,7 @@ public class TransactionServiceTest {
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
         assertEquals("Возникла ошибка при проведении транзакции", resultUTF8);
     }
+
 
 }
 
