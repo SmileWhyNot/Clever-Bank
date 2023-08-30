@@ -14,13 +14,24 @@ import java.util.List;
 import java.util.Scanner;
 
 
-// TODO JavaDoc
+/**
+ * Класс, обеспечивающий консольное взаимодействие с банковской системой.
+ * Позволяет пользователю войти в систему, выбрать операции с аккаунтом и проводить транзакции.
+ */
 public class BankingConsoleOperations {
     private final AccountService accountService;
     private final PersonService personService;
     private final TransactionService transactionService;
     private final BankService bankService;
 
+    /**
+     * Конструктор класса.
+     *
+     * @param accountService     Сервис для работы с аккаунтами.
+     * @param personService      Сервис для работы с пользователями.
+     * @param transactionService Сервис для проведения транзакций.
+     * @param bankService        Сервис для работы с банками.
+     */
     public BankingConsoleOperations(AccountService accountService,
                                     PersonService personService,
                                     TransactionService transactionService,
@@ -31,6 +42,9 @@ public class BankingConsoleOperations {
         this.bankService = bankService;
     }
 
+    /**
+     * Запускает консольное приложение банка.
+     */
     public void start() {
         Scanner scanner = new Scanner(System.in);
         Person currentUser = login(scanner);
@@ -43,6 +57,13 @@ public class BankingConsoleOperations {
         }
     }
 
+    /**
+     * Запускает консольное приложение банка с использованием заданного объекта Scanner.
+     * <p>
+     * Используется для тестирования
+     *
+     * @param scanner Объект Scanner для ввода пользовательских данных.
+     */
     public void start(Scanner scanner) {
         Person currentUser = login(scanner);
 
@@ -54,6 +75,12 @@ public class BankingConsoleOperations {
         }
     }
 
+    /**
+     * Обрабатывает операции, выполняемые пользователем в консольном интерфейсе банка.
+     *
+     * @param currentUser Зарегистрированный пользователь, выполнивший вход в систему.
+     * @param scanner     Объект Scanner для ввода пользовательских данных.
+     */
     private void handleUserOperations(Person currentUser, Scanner scanner) {
         while (true) {
             displayUserMenu();
@@ -72,6 +99,9 @@ public class BankingConsoleOperations {
         }
     }
 
+    /**
+     * Отображает меню операций пользователя в консоли.
+     */
     private void displayUserMenu() {
         System.out.println("Выберите операцию:");
         System.out.println("1. Пополнить счет");
@@ -80,13 +110,26 @@ public class BankingConsoleOperations {
         System.out.println("4. Выйти");
     }
 
-
+    /**
+     * Выполняет процесс аутентификации пользователя по электронной почте.
+     * Формат входа через почту выполнен для упрощения инициализации.
+     *
+     * @param scanner Объект Scanner для ввода email пользователя.
+     * @return Возвращает объект Person, представляющий зарегистрированного пользователя, или null, если аутентификация не удалась.
+     */
     private Person login(Scanner scanner) {
         System.out.println("Введите email:");
         String email = scanner.next();
         return personService.authenticate(email);
     }
 
+    /**
+     * Позволяет пользователю выбрать аккаунт для выполнения операций.
+     *
+     * @param userAccounts Список аккаунтов пользователя.
+     * @param scanner      Объект Scanner для выбора аккаунта.
+     * @return Выбранный пользователем аккаунт.
+     */
     private Account chooseAccountToWorkWith(List<Account> userAccounts, Scanner scanner) {
         while (true) {
             for (int i = 0; i < userAccounts.size(); i++) {
@@ -102,6 +145,12 @@ public class BankingConsoleOperations {
         }
     }
 
+    /**
+     * Выполняет операцию пополнения счета пользователя.
+     *
+     * @param currentUser Зарегистрированный пользователь.
+     * @param scanner     Объект Scanner для ввода данных операции.
+     */
     private void depositFunds(Person currentUser, Scanner scanner) {
         List<Account> userAccounts = accountService.getAccountsByOwner(currentUser.getId());
         if (userAccounts.isEmpty()) {
@@ -123,6 +172,12 @@ public class BankingConsoleOperations {
         System.out.println("Счет успешно пополнен.");
     }
 
+    /**
+     * Выполняет операцию снятия средств со счета пользователя.
+     *
+     * @param currentUser Зарегистрированный пользователь.
+     * @param scanner     Объект Scanner для ввода данных операции.
+     */
     private void withdrawFunds(Person currentUser, Scanner scanner) {
         List<Account> userAccounts = accountService.getAccountsByOwner(currentUser.getId());
         if (userAccounts.isEmpty()) {
@@ -144,6 +199,12 @@ public class BankingConsoleOperations {
         System.out.println("Средства успешно сняты со счета.");
     }
 
+    /**
+     * Выполняет операцию перевода средств между счетами.
+     *
+     * @param currentUser Зарегистрированный пользователь.
+     * @param scanner     Объект Scanner для ввода данных операции.
+     */
     private void performMoneyTransfer(Person currentUser, Scanner scanner) {
         List<Account> userAccounts = accountService.getAccountsByOwner(currentUser.getId());
         if (userAccounts.isEmpty()) {
@@ -170,5 +231,4 @@ public class BankingConsoleOperations {
                 senderAccount.getAccountNumber(), receiverAccount.getAccountNumber(), amount);
         System.out.println(result);
     }
-
 }
