@@ -32,23 +32,49 @@ public class BankService {
         return bank.getName();
     }
 
-    // TODO JavaDoc
+    /**
+     * Получает список всех банков.
+     *
+     * @return Список всех банков.
+     */
     public List<Bank> getAllBanks() {
         return bankDAO.getAllBanks();
     }
-    // TODO JavaDoc
+
+    /**
+     * Получает банк по его идентификатору.
+     *
+     * @param bankId Идентификатор банка.
+     * @return Банк с указанным идентификатором или null, если банк не найден.
+     */
     public Bank getBankById(int bankId) {
         return bankDAO.getBankById(bankId);
     }
-    // TODO JavaDoc
+
+    /**
+     * Создает новый банк.
+     *
+     * @param newBank Новый банк, который необходимо создать.
+     */
     public void createBank(Bank newBank) {
         bankDAO.addBank(newBank);
     }
-    // TODO JavaDoc
+
+    /**
+     * Обновляет существующий банк по его идентификатору.
+     *
+     * @param updatedBank Обновленные данные банка.
+     * @param bankId      Идентификатор банка, который необходимо обновить.
+     */
     public void updateBankById(Bank updatedBank, int bankId) {
         bankDAO.updateBank(updatedBank, bankId);
     }
-    // TODO JavaDoc
+
+    /**
+     * Удаляет банк по его идентификатору.
+     *
+     * @param bankId Идентификатор банка, который необходимо удалить.
+     */
     public void deleteBank(int bankId) {
         bankDAO.deleteBankById(bankId);
     }

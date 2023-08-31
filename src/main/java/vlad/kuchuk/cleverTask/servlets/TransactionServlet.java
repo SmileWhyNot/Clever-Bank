@@ -18,21 +18,36 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
-// TODO JavaDoc
+/**
+ * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Transaction.
+ * Обрабатывает HTTP-запросы, связанные с сущностью Transaction.
+ */
 @WebServlet("/transaction")
 public class TransactionServlet extends HttpServlet {
 
     private TransactionService transactionService;
-    private TransactionDAO transactionDAO;
-    private AccountDAO accountDAO;
 
+    /**
+     * Инициализация сервлета, создание экземпляров TransactionDAO и TransactionService.
+     *
+     * @param config Конфигурация сервлета.
+     * @throws ServletException В случае ошибки при инициализации сервлета.
+     */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        transactionDAO = new TransactionDAO(DatabaseConnection.getConnection());
+        TransactionDAO transactionDAO = new TransactionDAO(DatabaseConnection.getConnection());
+        AccountDAO accountDAO = new AccountDAO(DatabaseConnection.getConnection());
         transactionService = new TransactionService(accountDAO, transactionDAO);
     }
 
+    /**
+     * Обрабатывает HTTP GET-запросы, предоставляя информацию о сущности Transaction.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     * @throws IOException В случае ошибки ввода/вывода.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -50,6 +65,12 @@ public class TransactionServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает HTTP POST-запросы для создания, обновления и удаления сущности Transaction.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
@@ -74,6 +95,12 @@ public class TransactionServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Получает параметры из HTTP-запроса, и создает экземпляр Transaction на основе этих параметров.
+     *
+     * @param request Запрос от клиента.
+     * @return Экземпляр Transaction, созданный на основе параметров из запроса.
+     */
     private Transaction getTransactionWithParams(HttpServletRequest request) {
         String transactionType = request.getParameter("transaction_type");
         BigDecimal amount = new BigDecimal(request.getParameter("amount"));

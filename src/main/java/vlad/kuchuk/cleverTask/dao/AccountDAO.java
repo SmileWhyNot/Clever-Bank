@@ -137,7 +137,11 @@ public class AccountDAO {
         }
     }
 
-    //TODO JavaDoc
+    /**
+     * Добавляет новый аккаунт в базу данных.
+     *
+     * @param account Новый аккаунт для добавления.
+     */
     public void addAccount(Account account) {
         String sql = "INSERT INTO account (account_number, person_id, bank_id) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -155,7 +159,13 @@ public class AccountDAO {
             e.printStackTrace();
         }
     }
-    // TODO JavaDoc
+
+    /**
+     * Обновляет существующий аккаунт в базе данных.
+     *
+     * @param updatedAccount Обновленные данные аккаунта.
+     * @param accountId      Идентификатор аккаунта, который необходимо обновить.
+     */
     public void updateAccount(Account updatedAccount, int accountId) {
         String sql = "UPDATE account SET account_number = ?, person_id = ?, bank_id = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -175,7 +185,11 @@ public class AccountDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Удаляет аккаунт из базы данных по его идентификатору.
+     *
+     * @param accountId Идентификатор аккаунта, который необходимо удалить.
+     */
     public void deleteById(int accountId) {
         String sql = "DELETE FROM account WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -221,14 +235,13 @@ public class AccountDAO {
             return true;
         } catch (SQLException e) {
             try {
-                // В случае ошибки откатываем транзакцию
                 connection.rollback();
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             e.printStackTrace();
-            return false; // Ошибка при переводе средств
+            return false;
         }
     }
 

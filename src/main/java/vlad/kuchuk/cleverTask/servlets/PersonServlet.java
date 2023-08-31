@@ -14,19 +14,33 @@ import vlad.kuchuk.cleverTask.service.PersonService;
 import java.io.IOException;
 import java.util.List;
 
-//TODO JavaDoc
+/**
+ * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Person.
+ * Обрабатывает HTTP-запросы связанные с сущностью Person.
+ */
 @WebServlet("/person")
 public class PersonServlet extends HttpServlet {
     private PersonService personService;
-    private PersonDAO personDAO;
 
+    /**
+     * Инициализация сервлета, создание экземпляров PersonDAO и PersonService.
+     *
+     * @throws ServletException В случае ошибки при инициализации сервлета.
+     */
     @Override
     public void init() throws ServletException {
         super.init();
-        personDAO = new PersonDAO(DatabaseConnection.getConnection());
+        PersonDAO personDAO = new PersonDAO(DatabaseConnection.getConnection());
         personService = new PersonService(personDAO);
     }
 
+    /**
+     * Обрабатывает HTTP GET-запросы, предоставляя информацию о сущности Person.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     * @throws IOException В случае ошибки ввода/вывода.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -45,6 +59,12 @@ public class PersonServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает HTTP POST-запросы для создания, обновления и удаления сущности Person.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
@@ -72,4 +92,3 @@ public class PersonServlet extends HttpServlet {
         }
     }
 }
-

@@ -13,7 +13,6 @@ import java.util.List;
  * Класс, предоставляющий доступ к данным банков в базе данных.
  */
 public class BankDAO {
-
     private final Connection connection;
 
     /**
@@ -45,7 +44,11 @@ public class BankDAO {
         return null;
     }
 
-    //TODO JavaDoc
+    /**
+     * Возвращает список всех банков, имеющихся в базе данных.
+     *
+     * @return Список объектов Bank, представляющих все банки в базе данных.
+     */
     public List<Bank> getAllBanks() {
         String sql = "SELECT * FROM bank";
         List<Bank> banks = new ArrayList<>();
@@ -60,7 +63,12 @@ public class BankDAO {
         return banks;
     }
 
-    // TODO JavaDoc
+    /**
+     * Возвращает банк с указанным идентификатором.
+     *
+     * @param bankId Идентификатор банка, который требуется получить.
+     * @return Объект Bank, представляющий банк с указанным идентификатором.
+     */
     public Bank getBankById(int bankId) {
         String sql = "SELECT * FROM bank WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -75,7 +83,11 @@ public class BankDAO {
         return null;
     }
 
-    // TODO JavaDoc
+    /**
+     * Добавляет новый банк в базу данных.
+     *
+     * @param newBank Объект Bank, представляющий новый банк для добавления.
+     */
     public void addBank(Bank newBank) {
         String sql = "INSERT INTO bank (name) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -92,7 +104,12 @@ public class BankDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Обновляет существующий банк в базе данных.
+     *
+     * @param updatedBank Объект Bank с обновленными данными.
+     * @param bankId      Идентификатор банка, который требуется обновить.
+     */
     public void updateBank(Bank updatedBank, int bankId) {
         String sql = "UPDATE bank SET name = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -110,7 +127,11 @@ public class BankDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Удаляет банк из базы данных по его идентификатору.
+     *
+     * @param bankId Идентификатор банка, который требуется удалить.
+     */
     public void deleteBankById(int bankId) {
         String sql = "DELETE FROM bank WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -127,7 +148,6 @@ public class BankDAO {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Преобразует результат запроса из ResultSet в объект банка (Bank).

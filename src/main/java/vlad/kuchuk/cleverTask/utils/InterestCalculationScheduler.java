@@ -36,6 +36,17 @@ public class InterestCalculationScheduler {
         this.interestRate = interestRate;
     }
 
+    /**
+     * Конструктор класса, принимающий дополнительный параметр - объект
+     * ScheduledExecutorService для планирования и управления задачами на выполнение.
+     * <p>
+     * Конструктор используется для тестирования
+     *
+     * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
+     * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
+     * @param interestRate Значение процентной ставки для начисления процентов.
+     * @param scheduler    Объект класса ScheduledExecutorService для планирования выполнения задач.
+     */
     public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO,
                                         Double interestRate, ScheduledExecutorService scheduler) {
         this.accountDAO = accountDAO;
@@ -52,10 +63,9 @@ public class InterestCalculationScheduler {
     public void startInterestCalculation(int intervalSeconds) {
         Runnable interestCalculationTask = new InterestCalculationTask(accountDAO, bankDAO, interestRate);
 
-        // Запускаем задачу начисления процентов с интервалом в полминуты
         scheduler.scheduleAtFixedRate(
                 interestCalculationTask,
-                0, // Начало выполнения задачи сразу
+                0,
                 intervalSeconds,
                 TimeUnit.SECONDS
         );

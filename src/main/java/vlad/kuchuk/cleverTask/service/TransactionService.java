@@ -79,7 +79,6 @@ public class TransactionService {
         try {
             boolean isSuccessful = accountDAO.transferFunds(senderAccountId, receiverAccount.getId(), amount);
 
-            // Сохраняем записи о транзакции
             Transaction transaction = new Transaction(
                     new String("перевод".getBytes(), StandardCharsets.UTF_8),
                     amount,
@@ -102,23 +101,49 @@ public class TransactionService {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Получает список всех транзакций.
+     *
+     * @return Список всех транзакций.
+     */
     public List<Transaction> getAllTransactions() {
         return transactionDAO.getAllTransactions();
     }
-    // TODO JavaDoc
+
+    /**
+     * Получает транзакцию по ее идентификатору.
+     *
+     * @param transactionId Идентификатор транзакции.
+     * @return Транзакция с указанным идентификатором или null, если транзакция не найдена.
+     */
     public Transaction getTransactionById(int transactionId) {
         return transactionDAO.getTransactionById(transactionId);
     }
-    // TODO JavaDoc
+
+    /**
+     * Создает новую транзакцию.
+     *
+     * @param transaction Новая транзакция, которую необходимо создать.
+     */
     public void createTransaction(Transaction transaction) {
         transactionDAO.addTransaction(transaction);
     }
-    // TODO JavaDoc
+
+    /**
+     * Обновляет существующую транзакцию по ее идентификатору.
+     *
+     * @param updatedTransaction Обновленные данные транзакции.
+     * @param transactionId      Идентификатор транзакции, которую необходимо обновить.
+     */
     public void updatePersonById(Transaction updatedTransaction, int transactionId) {
         transactionDAO.updateTransaction(updatedTransaction, transactionId);
     }
-    // TODO JavaDoc
+
+    /**
+     * Удаляет транзакцию по ее идентификатору.
+     *
+     * @param transactionId Идентификатор транзакции, которую необходимо удалить.
+     */
     public void deleteTransaction(int transactionId) {
         transactionDAO.deleteTransactionById(transactionId);
     }

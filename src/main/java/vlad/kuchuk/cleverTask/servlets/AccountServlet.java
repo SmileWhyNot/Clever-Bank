@@ -14,19 +14,32 @@ import vlad.kuchuk.cleverTask.service.AccountService;
 import java.io.IOException;
 import java.util.List;
 
-// TODO JavaDoc
+/**
+ * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Account.
+ */
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
     private AccountService accountService;
-    private AccountDAO accountDAO;
 
+    /**
+     * Инициализация сервлета, создание экземпляров AccountDAO и AccountService.
+     *
+     * @throws ServletException В случае ошибки при инициализации сервлета.
+     */
     @Override
     public void init() throws ServletException {
         super.init();
-        accountDAO = new AccountDAO(DatabaseConnection.getConnection());
+        AccountDAO accountDAO = new AccountDAO(DatabaseConnection.getConnection());
         accountService = new AccountService(accountDAO);
     }
 
+    /**
+     * Обрабатывает GET-запросы для получения информации о счетах.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     * @throws IOException В случае ошибки ввода/вывода.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -45,6 +58,12 @@ public class AccountServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает POST-запросы для создания, обновления и удаления счетов.
+     *
+     * @param request  Запрос от клиента.
+     * @param response Ответ клиенту.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
@@ -72,6 +91,5 @@ public class AccountServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_OK);
             }
         }
-
     }
 }

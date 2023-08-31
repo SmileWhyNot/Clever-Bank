@@ -13,7 +13,6 @@ import java.util.List;
  * Класс, предоставляющий доступ к данным о пользователях банков в базе данных.
  */
 public class PersonDAO {
-
     private final Connection connection;
 
     /**

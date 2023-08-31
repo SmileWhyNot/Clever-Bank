@@ -27,7 +27,7 @@ public class InterestCalculationTask implements Runnable{
 
     private final AccountDAO accountDAO;
     private final BankDAO bankDAO;
-    private final Double interestRate; // Значение процентов из конфигурационного файла
+    private final Double interestRate;
 
     /**
      * Конструктор класса.
@@ -61,11 +61,9 @@ public class InterestCalculationTask implements Runnable{
 
             try {
                 if (lastInterestCalculationDate == null || !isSameMonth(lastInterestCalculationDate, currentDate)) {
-                    // Рассчитайте начисление процентов
                     BigDecimal currentBalance = account.getBalance();
                     BigDecimal interest = currentBalance.multiply(BigDecimal.valueOf(interestRate));
 
-                    // Обновите баланс с учетом начисления процентов
                     BigDecimal newBalance = currentBalance.add(interest);
                     accountDAO.updateBalance(account.getId(), newBalance);
                     account.setBalance(newBalance);
@@ -79,7 +77,6 @@ public class InterestCalculationTask implements Runnable{
                     java.sql.Date curSQLDate = new java.sql.Date(currentDate.getTime());
                     accountDAO.updateLastInterestCalculationDate(account.getId(), curSQLDate);
 
-                    // Логируйте начисление процентов
                     System.out.println("Начисление процентов для счета " + account.getAccountNumber() +
                             ": " + interest + " (Итоговый баланс: " + newBalance + ")");
                     updatedAccounts++;

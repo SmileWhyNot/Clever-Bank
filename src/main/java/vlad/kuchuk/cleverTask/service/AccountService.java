@@ -40,23 +40,49 @@ public class AccountService {
         return accountDAO.getByAccountNumber(accountNumber);
     }
 
-    //TODO JavaDoc
+    /**
+     * Получает список всех счетов.
+     *
+     * @return Список всех счетов.
+     */
     public List<Account> getAllAccounts() {
         return accountDAO.getAllAccounts();
     }
-    //TODO JavaDoc
+
+    /**
+     * Получает счет по его идентификатору.
+     *
+     * @param accountId Идентификатор счета.
+     * @return Счет с указанным идентификатором или null, если счет не найден.
+     */
     public Account getAccountById(int accountId) {
         return accountDAO.getById(accountId);
     }
-    //TODO JavaDoc
+
+    /**
+     * Создает новый счет.
+     *
+     * @param account Новый счет, который необходимо создать.
+     */
     public void createAccount(Account account) {
         accountDAO.addAccount(account);
     }
-    //TODO JavaDoc
+
+    /**
+     * Обновляет существующий счет по его идентификатору.
+     *
+     * @param updatedAccount Обновленные данные счета.
+     * @param accountId      Идентификатор счета, который необходимо обновить.
+     */
     public void updateAccountById(Account updatedAccount, int accountId) {
         accountDAO.updateAccount(updatedAccount, accountId);
     }
-    //TODO JavaDoc
+
+    /**
+     * Удаляет счет по его идентификатору.
+     *
+     * @param accountId Идентификатор счета, который необходимо удалить.
+     */
     public void deleteAccountById(int accountId) {
         accountDAO.deleteById(accountId);
     }

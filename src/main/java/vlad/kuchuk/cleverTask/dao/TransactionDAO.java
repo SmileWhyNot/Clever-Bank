@@ -1,6 +1,5 @@
 package vlad.kuchuk.cleverTask.dao;
 
-import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Transaction;
 
 import java.sql.Connection;
@@ -44,7 +43,11 @@ public class TransactionDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Возвращает список всех транзакций, имеющихся в базе данных.
+     *
+     * @return Список объектов Transaction, представляющих все транзакции в базе данных.
+     */
     public List<Transaction> getAllTransactions() {
         String sql = "SELECT * FROM transaction";
         List<Transaction> transactions = new ArrayList<>();
@@ -59,8 +62,12 @@ public class TransactionDAO {
         return transactions;
     }
 
-
-    // TODO JavaDoc
+    /**
+     * Возвращает транзакцию с указанным идентификатором.
+     *
+     * @param transactionId Идентификатор транзакции, которую требуется получить.
+     * @return Объект Transaction, представляющий транзакцию с указанным идентификатором.
+     */
     public Transaction getTransactionById(int transactionId) {
         String sql = "SELECT * FROM transaction WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -75,7 +82,11 @@ public class TransactionDAO {
         return null;
     }
 
-    // TODO JavaDoc
+    /**
+     * Добавляет новую транзакцию в базу данных.
+     *
+     * @param transaction Объект Transaction, представляющий новую транзакцию для добавления.
+     */
     public void addTransaction(Transaction transaction) {
         String sql = "INSERT INTO transaction (transaction_type, amount, timestamp, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -95,7 +106,13 @@ public class TransactionDAO {
             e.printStackTrace();
         }
     }
-    // TODO JavaDoc
+
+    /**
+     * Обновляет существующую транзакцию в базе данных.
+     *
+     * @param updatedTransaction Объект Transaction с обновленными данными.
+     * @param transactionId      Идентификатор транзакции, которую требуется обновить.
+     */
     public void updateTransaction(Transaction updatedTransaction, int transactionId) {
         String sql = "UPDATE transaction SET transaction_type = ?, amount = ?, timestamp = ?, sender_account_id = ?, receiver_account_id = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -117,7 +134,11 @@ public class TransactionDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Удаляет транзакцию из базы данных по ее идентификатору.
+     *
+     * @param transactionId Идентификатор транзакции, которую требуется удалить.
+     */
     public void deleteTransactionById(int transactionId) {
         String sql = "DELETE FROM transaction WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -135,9 +156,15 @@ public class TransactionDAO {
         }
     }
 
-    // TODO JavaDoc
+    /**
+     * Преобразует строку результата из ResultSet в объект Transaction.
+     *
+     * @param resultSet Результат запроса к базе данных, содержащий данные транзакции.
+     * @return Объект Transaction, созданный на основе данных из ResultSet.
+     * @throws SQLException Если возникает ошибка при доступе к данным из ResultSet.
+     */
     private Transaction mapResultSetToTransaction(ResultSet resultSet) throws SQLException {
-        Transaction transaction = new Transaction(
+        return new Transaction(
                 resultSet.getString("transaction_type"),
                 resultSet.getBigDecimal("amount"),
                 resultSet.getTimestamp("timestamp"),
@@ -145,6 +172,5 @@ public class TransactionDAO {
                 resultSet.getInt("receiver_account_id")
 
         );
-        return transaction;
     }
 }

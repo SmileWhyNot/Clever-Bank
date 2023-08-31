@@ -15,20 +15,38 @@ import vlad.kuchuk.cleverTask.service.BankService;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Класс BankServlet представляет сервлет для управления операциями с банками.
+ * Он обрабатывает HTTP GET и POST запросы, связанные с банками, такие как получение списка банков,
+ * получение информации о конкретном банке, создание нового банка, обновление существующего банка и удаление банка.
+ */
 @WebServlet("/bank")
 public class BankServlet extends HttpServlet {
 
     private BankService bankService;
-    private BankDAO bankDAO;
+
+    /**
+     * Метод инициализации сервлета, который создает экземпляры BankService и BankDAO для выполнения операций с банками.
+     *
+     * @param config Объект, предоставляющий информацию о конфигурации сервлета.
+     * @throws ServletException Если возникает ошибка при инициализации сервлета.
+     */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        bankDAO = new BankDAO(DatabaseConnection.getConnection());
+        BankDAO bankDAO = new BankDAO(DatabaseConnection.getConnection());
         bankService = new BankService(bankDAO);
     }
 
+    /**
+     * Обрабатывает HTTP GET запросы, связанные с операциями с банками.
+     *
+     * @param request  Объект HttpServletRequest, представляющий HTTP запрос.
+     * @param response Объект HttpServletResponse, представляющий HTTP ответ.
+     * @throws IOException      Если возникает ошибка ввода/вывода при отправке ответа.
+     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
         if (action == null) {
             List<Bank> banks = bankService.getAllBanks();
@@ -44,8 +62,14 @@ public class BankServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает HTTP POST запросы, связанные с операциями создания, обновления и удаления банков.
+     *
+     * @param request  Объект HttpServletRequest, представляющий HTTP запрос.
+     * @param response Объект HttpServletResponse, представляющий HTTP ответ.
+     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         switch (action) {
             case "create" -> {
