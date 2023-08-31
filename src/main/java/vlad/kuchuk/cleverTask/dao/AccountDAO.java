@@ -137,6 +137,62 @@ public class AccountDAO {
         }
     }
 
+    //TODO JavaDoc
+    public void addAccount(Account account) {
+        String sql = "INSERT INTO account (account_number, person_id, bank_id) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, account.getAccountNumber());
+            preparedStatement.setInt(2, account.getPersonId());
+            preparedStatement.setInt(3, account.getBankId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account added successfully.");
+            } else {
+                System.err.println("Failed to add account.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    // TODO JavaDoc
+    public void updateAccount(Account updatedAccount, int accountId) {
+        String sql = "UPDATE account SET account_number = ?, person_id = ?, bank_id = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, updatedAccount.getAccountNumber());
+            preparedStatement.setInt(2, updatedAccount.getPersonId());
+            preparedStatement.setInt(3, updatedAccount.getBankId());
+            preparedStatement.setInt(4, accountId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account updated successfully.");
+            } else {
+                System.err.println("Failed to update account.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // TODO JavaDoc
+    public void deleteById(int accountId) {
+        String sql = "DELETE FROM account WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setInt(1, accountId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Account deleted successfully.");
+            } else {
+                System.err.println("No account found with id: " + accountId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Переводит средства между двумя счетами в рамках одной транзакции.
      *

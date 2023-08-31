@@ -39,4 +39,25 @@ public class AccountService {
     public Account getAccountDataByNumber(String accountNumber) {
         return accountDAO.getByAccountNumber(accountNumber);
     }
+
+    //TODO JavaDoc
+    public List<Account> getAllAccounts() {
+        return accountDAO.getAllAccounts();
+    }
+    //TODO JavaDoc
+    public Account getAccountById(int accountId) {
+        return accountDAO.getById(accountId);
+    }
+    //TODO JavaDoc
+    public void createAccount(Account account) {
+        accountDAO.addAccount(account);
+    }
+    //TODO JavaDoc
+    public void updateAccountById(Account updatedAccount, int accountId) {
+        accountDAO.updateAccount(updatedAccount, accountId);
+    }
+    //TODO JavaDoc
+    public void deleteAccountById(int accountId) {
+        accountDAO.deleteById(accountId);
+    }
 }

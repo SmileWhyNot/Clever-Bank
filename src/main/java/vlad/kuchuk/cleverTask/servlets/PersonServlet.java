@@ -14,6 +14,7 @@ import vlad.kuchuk.cleverTask.service.PersonService;
 import java.io.IOException;
 import java.util.List;
 
+//TODO JavaDoc
 @WebServlet("/person")
 public class PersonServlet extends HttpServlet {
     private PersonService personService;
@@ -49,7 +50,6 @@ public class PersonServlet extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "create" -> {
-                // Создаем нового человека
                 String name = request.getParameter("name");
                 String email = request.getParameter("email");
                 Person newPerson = new Person(name, email);
@@ -57,7 +57,6 @@ public class PersonServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_CREATED);
             }
             case "update" -> {
-                // Обновляем данные о человеке
                 String newName = request.getParameter("name");
                 String newEmail = request.getParameter("email");
                 int personId = Integer.parseInt(request.getParameter("id"));
@@ -66,7 +65,6 @@ public class PersonServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_OK);
             }
             case "delete" -> {
-                // Удаляем человека по ID
                 int personId = Integer.parseInt(request.getParameter("id"));
                 personService.deletePerson(personId);
                 response.setStatus(HttpServletResponse.SC_OK);

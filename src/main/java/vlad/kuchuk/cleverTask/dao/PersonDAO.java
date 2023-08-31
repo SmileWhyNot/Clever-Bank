@@ -1,6 +1,5 @@
 package vlad.kuchuk.cleverTask.dao;
 
-import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
 
 import java.sql.Connection;

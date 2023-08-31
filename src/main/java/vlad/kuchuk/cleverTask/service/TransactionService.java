@@ -8,6 +8,7 @@ import vlad.kuchuk.cleverTask.model.Transaction;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -99,6 +100,27 @@ public class TransactionService {
             senderAccount.unlock();
             receiverAccount.unlock();
         }
+    }
+
+    // TODO JavaDoc
+    public List<Transaction> getAllTransactions() {
+        return transactionDAO.getAllTransactions();
+    }
+    // TODO JavaDoc
+    public Transaction getTransactionById(int transactionId) {
+        return transactionDAO.getTransactionById(transactionId);
+    }
+    // TODO JavaDoc
+    public void createTransaction(Transaction transaction) {
+        transactionDAO.addTransaction(transaction);
+    }
+    // TODO JavaDoc
+    public void updatePersonById(Transaction updatedTransaction, int transactionId) {
+        transactionDAO.updateTransaction(updatedTransaction, transactionId);
+    }
+    // TODO JavaDoc
+    public void deleteTransaction(int transactionId) {
+        transactionDAO.deleteTransactionById(transactionId);
     }
 }
 
