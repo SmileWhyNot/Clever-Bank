@@ -15,16 +15,16 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Account.
+ * РЎРµСЂРІР»РµС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РѕРїРµСЂР°С†РёСЏРјРё CRUD (СЃРѕР·РґР°РЅРёРµ, С‡С‚РµРЅРёРµ, РѕР±РЅРѕРІР»РµРЅРёРµ, СѓРґР°Р»РµРЅРёРµ) СЃСѓС‰РЅРѕСЃС‚РµР№ Account.
  */
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
     private AccountService accountService;
 
     /**
-     * Инициализация сервлета, создание экземпляров AccountDAO и AccountService.
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІР»РµС‚Р°, СЃРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂРѕРІ AccountDAO Рё AccountService.
      *
-     * @throws ServletException В случае ошибки при инициализации сервлета.
+     * @throws ServletException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРµСЂРІР»РµС‚Р°.
      */
     @Override
     public void init() throws ServletException {
@@ -34,11 +34,11 @@ public class AccountServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает GET-запросы для получения информации о счетах.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ GET-Р·Р°РїСЂРѕСЃС‹ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃС‡РµС‚Р°С….
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
-     * @throws IOException В случае ошибки ввода/вывода.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
+     * @throws IOException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РІРІРѕРґР°/РІС‹РІРѕРґР°.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -59,10 +59,10 @@ public class AccountServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает POST-запросы для создания, обновления и удаления счетов.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ POST-Р·Р°РїСЂРѕСЃС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ, РѕР±РЅРѕРІР»РµРЅРёСЏ Рё СѓРґР°Р»РµРЅРёСЏ СЃС‡РµС‚РѕРІ.
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {

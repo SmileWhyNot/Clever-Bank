@@ -19,8 +19,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Transaction.
- * Обрабатывает HTTP-запросы, связанные с сущностью Transaction.
+ * РЎРµСЂРІР»РµС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РѕРїРµСЂР°С†РёСЏРјРё CRUD (СЃРѕР·РґР°РЅРёРµ, С‡С‚РµРЅРёРµ, РѕР±РЅРѕРІР»РµРЅРёРµ, СѓРґР°Р»РµРЅРёРµ) СЃСѓС‰РЅРѕСЃС‚РµР№ Transaction.
+ * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP-Р·Р°РїСЂРѕСЃС‹, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ СЃСѓС‰РЅРѕСЃС‚СЊСЋ Transaction.
  */
 @WebServlet("/transaction")
 public class TransactionServlet extends HttpServlet {
@@ -28,10 +28,10 @@ public class TransactionServlet extends HttpServlet {
     private TransactionService transactionService;
 
     /**
-     * Инициализация сервлета, создание экземпляров TransactionDAO и TransactionService.
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІР»РµС‚Р°, СЃРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂРѕРІ TransactionDAO Рё TransactionService.
      *
-     * @param config Конфигурация сервлета.
-     * @throws ServletException В случае ошибки при инициализации сервлета.
+     * @param config РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ СЃРµСЂРІР»РµС‚Р°.
+     * @throws ServletException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРµСЂРІР»РµС‚Р°.
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -42,11 +42,11 @@ public class TransactionServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает HTTP GET-запросы, предоставляя информацию о сущности Transaction.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP GET-Р·Р°РїСЂРѕСЃС‹, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЏ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃСѓС‰РЅРѕСЃС‚Рё Transaction.
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
-     * @throws IOException В случае ошибки ввода/вывода.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
+     * @throws IOException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РІРІРѕРґР°/РІС‹РІРѕРґР°.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -66,10 +66,10 @@ public class TransactionServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает HTTP POST-запросы для создания, обновления и удаления сущности Transaction.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP POST-Р·Р°РїСЂРѕСЃС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ, РѕР±РЅРѕРІР»РµРЅРёСЏ Рё СѓРґР°Р»РµРЅРёСЏ СЃСѓС‰РЅРѕСЃС‚Рё Transaction.
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -96,10 +96,10 @@ public class TransactionServlet extends HttpServlet {
     }
 
     /**
-     * Получает параметры из HTTP-запроса, и создает экземпляр Transaction на основе этих параметров.
+     * РџРѕР»СѓС‡Р°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РёР· HTTP-Р·Р°РїСЂРѕСЃР°, Рё СЃРѕР·РґР°РµС‚ СЌРєР·РµРјРїР»СЏСЂ Transaction РЅР° РѕСЃРЅРѕРІРµ СЌС‚РёС… РїР°СЂР°РјРµС‚СЂРѕРІ.
      *
-     * @param request Запрос от клиента.
-     * @return Экземпляр Transaction, созданный на основе параметров из запроса.
+     * @param request Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @return Р­РєР·РµРјРїР»СЏСЂ Transaction, СЃРѕР·РґР°РЅРЅС‹Р№ РЅР° РѕСЃРЅРѕРІРµ РїР°СЂР°РјРµС‚СЂРѕРІ РёР· Р·Р°РїСЂРѕСЃР°.
      */
     private Transaction getTransactionWithParams(HttpServletRequest request) {
         String transactionType = request.getParameter("transaction_type");

@@ -8,14 +8,14 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Класс, отвечающий за планирование и выполнение периодических начислений процентов
- * на счетах пользователей с учетом заданной процентной ставки.
+ * РљР»Р°СЃСЃ, РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РїР»Р°РЅРёСЂРѕРІР°РЅРёРµ Рё РІС‹РїРѕР»РЅРµРЅРёРµ РїРµСЂРёРѕРґРёС‡РµСЃРєРёС… РЅР°С‡РёСЃР»РµРЅРёР№ РїСЂРѕС†РµРЅС‚РѕРІ
+ * РЅР° СЃС‡РµС‚Р°С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ СЃ СѓС‡РµС‚РѕРј Р·Р°РґР°РЅРЅРѕР№ РїСЂРѕС†РµРЅС‚РЅРѕР№ СЃС‚Р°РІРєРё.
  *
  * <p>
- * Для запуска периодического начисления процентов необходимо вызвать метод
- * {@link #startInterestCalculation(int)} и указать интервал в секундах между
- * начислениями. Для остановки выполнения периодического начисления можно вызвать
- * метод {@link #stopInterestCalculation()}.
+ * Р”Р»СЏ Р·Р°РїСѓСЃРєР° РїРµСЂРёРѕРґРёС‡РµСЃРєРѕРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ
+ * {@link #startInterestCalculation(int)} Рё СѓРєР°Р·Р°С‚СЊ РёРЅС‚РµСЂРІР°Р» РІ СЃРµРєСѓРЅРґР°С… РјРµР¶РґСѓ
+ * РЅР°С‡РёСЃР»РµРЅРёСЏРјРё. Р”Р»СЏ РѕСЃС‚Р°РЅРѕРІРєРё РІС‹РїРѕР»РЅРµРЅРёСЏ РїРµСЂРёРѕРґРёС‡РµСЃРєРѕРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ РјРѕР¶РЅРѕ РІС‹Р·РІР°С‚СЊ
+ * РјРµС‚РѕРґ {@link #stopInterestCalculation()}.
  */
 public class InterestCalculationScheduler {
     private ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(2);
@@ -24,11 +24,11 @@ public class InterestCalculationScheduler {
     private final Double interestRate;
 
     /**
-     * Конструктор класса.
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.
      *
-     * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
-     * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
-     * @param interestRate Значение процентной ставки для начисления процентов.
+     * @param accountDAO   РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° AccountDAO РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј СЃС‡РµС‚РѕРІ.
+     * @param bankDAO      РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° BankDAO РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј Рѕ Р±Р°РЅРєРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+     * @param interestRate Р—РЅР°С‡РµРЅРёРµ РїСЂРѕС†РµРЅС‚РЅРѕР№ СЃС‚Р°РІРєРё РґР»СЏ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ.
      */
     public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO, Double interestRate) {
         this.accountDAO = accountDAO;
@@ -37,15 +37,15 @@ public class InterestCalculationScheduler {
     }
 
     /**
-     * Конструктор класса, принимающий дополнительный параметр - объект
-     * ScheduledExecutorService для планирования и управления задачами на выполнение.
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°, РїСЂРёРЅРёРјР°СЋС‰РёР№ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ - РѕР±СЉРµРєС‚
+     * ScheduledExecutorService РґР»СЏ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ Рё СѓРїСЂР°РІР»РµРЅРёСЏ Р·Р°РґР°С‡Р°РјРё РЅР° РІС‹РїРѕР»РЅРµРЅРёРµ.
      * <p>
-     * Конструктор используется для тестирования
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
      *
-     * @param accountDAO   Объект класса AccountDAO для доступа к данным счетов.
-     * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
-     * @param interestRate Значение процентной ставки для начисления процентов.
-     * @param scheduler    Объект класса ScheduledExecutorService для планирования выполнения задач.
+     * @param accountDAO   РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° AccountDAO РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј СЃС‡РµС‚РѕРІ.
+     * @param bankDAO      РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° BankDAO РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј Рѕ Р±Р°РЅРєРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+     * @param interestRate Р—РЅР°С‡РµРЅРёРµ РїСЂРѕС†РµРЅС‚РЅРѕР№ СЃС‚Р°РІРєРё РґР»СЏ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ.
+     * @param scheduler    РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° ScheduledExecutorService РґР»СЏ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡.
      */
     public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO,
                                         Double interestRate, ScheduledExecutorService scheduler) {
@@ -56,9 +56,9 @@ public class InterestCalculationScheduler {
     }
 
     /**
-     * Запускает периодическое начисление процентов с заданным интервалом.
+     * Р—Р°РїСѓСЃРєР°РµС‚ РїРµСЂРёРѕРґРёС‡РµСЃРєРѕРµ РЅР°С‡РёСЃР»РµРЅРёРµ РїСЂРѕС†РµРЅС‚РѕРІ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРЅС‚РµСЂРІР°Р»РѕРј.
      *
-     * @param intervalSeconds Интервал в секундах между начислениями процентов.
+     * @param intervalSeconds РРЅС‚РµСЂРІР°Р» РІ СЃРµРєСѓРЅРґР°С… РјРµР¶РґСѓ РЅР°С‡РёСЃР»РµРЅРёСЏРјРё РїСЂРѕС†РµРЅС‚РѕРІ.
      */
     public void startInterestCalculation(int intervalSeconds) {
         Runnable interestCalculationTask = new InterestCalculationTask(accountDAO, bankDAO, interestRate);
@@ -72,7 +72,7 @@ public class InterestCalculationScheduler {
     }
 
     /**
-     * Останавливает выполнение периодического начисления процентов.
+     * РћСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІС‹РїРѕР»РЅРµРЅРёРµ РїРµСЂРёРѕРґРёС‡РµСЃРєРѕРіРѕ РЅР°С‡РёСЃР»РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ.
      */
     public void stopInterestCalculation() {
         scheduler.shutdown();

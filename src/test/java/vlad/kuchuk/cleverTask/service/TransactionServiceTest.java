@@ -79,7 +79,7 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("Транзакция проведена успешно", resultUTF8);
+        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РїСЂРѕРІРµРґРµРЅР° СѓСЃРїРµС€РЅРѕ", resultUTF8);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("Транзакция отменена. Счет не найден", resultUTF8);
+        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РѕС‚РјРµРЅРµРЅР°. РЎС‡РµС‚ РЅРµ РЅР°Р№РґРµРЅ", resultUTF8);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("Транзакция отменена. Недостаточно средств", resultUTF8);
+        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РѕС‚РјРµРЅРµРЅР°. РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ", resultUTF8);
     }
 
     @Test
@@ -131,7 +131,7 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("Возникла ошибка при проведении транзакции", resultUTF8);
+        assertEquals("Р’РѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РїСЂРё РїСЂРѕРІРµРґРµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёРё", resultUTF8);
     }
 
 

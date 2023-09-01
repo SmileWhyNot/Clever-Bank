@@ -15,17 +15,17 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Сервлет для управления операциями CRUD (создание, чтение, обновление, удаление) сущностей Person.
- * Обрабатывает HTTP-запросы связанные с сущностью Person.
+ * РЎРµСЂРІР»РµС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РѕРїРµСЂР°С†РёСЏРјРё CRUD (СЃРѕР·РґР°РЅРёРµ, С‡С‚РµРЅРёРµ, РѕР±РЅРѕРІР»РµРЅРёРµ, СѓРґР°Р»РµРЅРёРµ) СЃСѓС‰РЅРѕСЃС‚РµР№ Person.
+ * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP-Р·Р°РїСЂРѕСЃС‹ СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ СЃСѓС‰РЅРѕСЃС‚СЊСЋ Person.
  */
 @WebServlet("/person")
 public class PersonServlet extends HttpServlet {
     private PersonService personService;
 
     /**
-     * Инициализация сервлета, создание экземпляров PersonDAO и PersonService.
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІР»РµС‚Р°, СЃРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂРѕРІ PersonDAO Рё PersonService.
      *
-     * @throws ServletException В случае ошибки при инициализации сервлета.
+     * @throws ServletException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРµСЂРІР»РµС‚Р°.
      */
     @Override
     public void init() throws ServletException {
@@ -35,11 +35,11 @@ public class PersonServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает HTTP GET-запросы, предоставляя информацию о сущности Person.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP GET-Р·Р°РїСЂРѕСЃС‹, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЏ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃСѓС‰РЅРѕСЃС‚Рё Person.
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
-     * @throws IOException В случае ошибки ввода/вывода.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
+     * @throws IOException Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РІРІРѕРґР°/РІС‹РІРѕРґР°.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,10 +60,10 @@ public class PersonServlet extends HttpServlet {
     }
 
     /**
-     * Обрабатывает HTTP POST-запросы для создания, обновления и удаления сущности Person.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP POST-Р·Р°РїСЂРѕСЃС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ, РѕР±РЅРѕРІР»РµРЅРёСЏ Рё СѓРґР°Р»РµРЅРёСЏ СЃСѓС‰РЅРѕСЃС‚Рё Person.
      *
-     * @param request  Запрос от клиента.
-     * @param response Ответ клиенту.
+     * @param request  Р—Р°РїСЂРѕСЃ РѕС‚ РєР»РёРµРЅС‚Р°.
+     * @param response РћС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
