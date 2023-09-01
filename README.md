@@ -377,9 +377,7 @@ dependencies {
 **Endpoint**: `/transaction?action=delete`
 
 **Пример входных данных (JSON)**:
-```
-
-json
+```json
 {
     "id": 1
 }
