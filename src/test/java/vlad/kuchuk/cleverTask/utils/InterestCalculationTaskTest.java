@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collections;
 
-public class InterestCalculationTaskTest {
+class InterestCalculationTaskTest {
 
     @Test
     void testInterestCalculationWhenLastCalculationDateIsNull() {

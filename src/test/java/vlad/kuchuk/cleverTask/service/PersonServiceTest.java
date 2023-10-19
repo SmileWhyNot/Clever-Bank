@@ -5,13 +5,16 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.PersonDAO;
 import vlad.kuchuk.cleverTask.model.Person;
 
-public class PersonServiceTest {
+@ExtendWith(MockitoExtension.class)
+class PersonServiceTest {
 
     @InjectMocks
     private PersonService personService;
@@ -19,13 +22,8 @@ public class PersonServiceTest {
     @Mock
     private PersonDAO personDAO;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    public void testAuthenticateWithValidEmail() {
+    void testAuthenticateWithValidEmail() {
         String validEmail = "john.doe@example.com";
         Person person = new Person(validEmail, "John Doe");
 
@@ -38,7 +36,7 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void testAuthenticateWithInvalidEmail() {
+    void testAuthenticateWithInvalidEmail() {
         String invalidEmail = "nonexistent@example.com";
 
         when(personDAO.getPersonByEmail(invalidEmail)).thenReturn(null);

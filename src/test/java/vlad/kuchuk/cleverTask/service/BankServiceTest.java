@@ -5,13 +5,16 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.BankDAO;
 import vlad.kuchuk.cleverTask.model.Bank;
 
-public class BankServiceTest {
+@ExtendWith(MockitoExtension.class)
+class BankServiceTest {
 
     @InjectMocks
     private BankService bankService;
@@ -19,13 +22,8 @@ public class BankServiceTest {
     @Mock
     private BankDAO bankDAO;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    public void testGetBankNameByAccountNumber() {
+    void testGetBankNameByAccountNumber() {
         String accountNumber = "12345";
         String bankName = "Example Bank";
 

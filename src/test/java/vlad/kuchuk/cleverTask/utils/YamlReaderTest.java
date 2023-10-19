@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class YamlReaderTest {
+class YamlReaderTest {
 
     @BeforeAll
     public static void setUp() throws NoSuchFieldException, IllegalAccessException {
@@ -21,20 +21,20 @@ public class YamlReaderTest {
     }
 
     @Test
-    public void testGetString() {
+    void testGetString() {
         String expectedValue = "someValue";
         String actualValue = YamlReader.getString("propertyKey");
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    public void testGetStringKeyNotFound() {
+    void testGetStringKeyNotFound() {
         String actualValue = YamlReader.getString("nonExistentKey");
         assertNull(actualValue);
     }
 
     @Test
-    public void testGetDouble() {
+    void testGetDouble() {
         String key = "doublePropertyKey";
         double expectedValue = 42.0;
         double actualValue = YamlReader.getDouble(key);
@@ -42,7 +42,7 @@ public class YamlReaderTest {
     }
 
     @Test
-    public void testGetDoubleKeyNotFound() {
+    void testGetDoubleKeyNotFound() {
         Double actualValue = YamlReader.getDouble("nonExistentKey");
         assertNull(actualValue);
     }

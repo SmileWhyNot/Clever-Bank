@@ -15,7 +15,7 @@ import java.util.concurrent.locks.Lock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AccountTest {
+class AccountTest {
     private Account account;
 
     @BeforeEach

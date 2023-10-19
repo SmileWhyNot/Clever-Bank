@@ -1,8 +1,11 @@
 package vlad.kuchuk.cleverTask.utils;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.dao.BankDAO;
 
@@ -13,21 +16,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 
-public class InterestCalculationSchedulerTest {
+@ExtendWith(MockitoExtension.class)
+class InterestCalculationSchedulerTest {
 
+    @InjectMocks
     private InterestCalculationScheduler scheduler;
+    @Mock
     private AccountDAO accountDAO;
+    @Mock
     private BankDAO bankDAO;
+    @Mock
     private ScheduledExecutorService executorService;
 
-    @BeforeEach
-    void setUp() {
-        accountDAO = Mockito.mock(AccountDAO.class);
-        bankDAO = Mockito.mock(BankDAO.class);
-        executorService = Mockito.mock(ScheduledExecutorService.class);
-
-        scheduler = new InterestCalculationScheduler(accountDAO, bankDAO, 0.05, executorService);
-    }
 
     @Test
     void testStartAndStopInterestCalculation() throws InterruptedException {

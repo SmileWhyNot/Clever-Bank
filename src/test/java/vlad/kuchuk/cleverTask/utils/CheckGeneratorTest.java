@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class CheckGeneratorTest {
+class CheckGeneratorTest {
 
     private static final String DIRECTORY_PATH = "check";
 
@@ -21,7 +21,7 @@ public class CheckGeneratorTest {
     }
 
     @Test
-    public void testGenerateCheck() throws IOException {
+    void testGenerateCheck() throws IOException {
         String transactionType = "перевод";
         String senderBank = "Банк1";
         String receiverBank = "Банк2";

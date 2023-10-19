@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DatabaseConnectionTest {
+class DatabaseConnectionTest {
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +25,7 @@ public class DatabaseConnectionTest {
     // При запуске совместно со всеми тестами
     // Этот тест проваливается
     // Отдельно проверка подключения работает корректно
-    public void testGetConnection() {
+    void testGetConnection() {
         Connection connection = DatabaseConnection.getConnection();
         assertNotNull(connection);
 
@@ -37,7 +37,7 @@ public class DatabaseConnectionTest {
     }
 
     @Test
-    public void testCloseConnection() {
+    void testCloseConnection() {
         Connection connection = DatabaseConnection.getConnection();
         assertNotNull(connection);
 

@@ -8,14 +8,17 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.model.Account;
 
-public class TransactionServiceTest {
+@ExtendWith(MockitoExtension.class)
+class TransactionServiceTest {
 
     @InjectMocks
     private TransactionService transactionService;
@@ -26,13 +29,8 @@ public class TransactionServiceTest {
     @Mock
     private TransactionDAO transactionDAO;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    public void testDepositMoney() {
+    void testDepositMoney() {
         String accountNumber = "12345";
         BigDecimal initialBalance = new BigDecimal("100.00");
         BigDecimal depositAmount = new BigDecimal("50.00");
@@ -48,7 +46,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    public void testWithdrawMoney() {
+    void testWithdrawMoney() {
         int accountId = 1;
         BigDecimal initialBalance = new BigDecimal("100.00");
         BigDecimal withdrawalAmount = new BigDecimal("30.00");
@@ -63,7 +61,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    public void testExecuteMoneyTransferSuccessful() {
+    void testExecuteMoneyTransferSuccessful() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
         BigDecimal amount = new BigDecimal("50.00");
@@ -79,11 +77,11 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РїСЂРѕРІРµРґРµРЅР° СѓСЃРїРµС€РЅРѕ", resultUTF8);
+        assertEquals("Транзакция проведена успешно", resultUTF8);
     }
 
     @Test
-    public void testExecuteMoneyTransferAccountNotFound() {
+    void testExecuteMoneyTransferAccountNotFound() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
         BigDecimal amount = new BigDecimal("50.00");
@@ -93,11 +91,11 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РѕС‚РјРµРЅРµРЅР°. РЎС‡РµС‚ РЅРµ РЅР°Р№РґРµРЅ", resultUTF8);
+        assertEquals("Транзакция отменена. Счет не найден", resultUTF8);
     }
 
     @Test
-    public void testExecuteMoneyTransferInsufficientFunds() {
+    void testExecuteMoneyTransferInsufficientFunds() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
         BigDecimal amount = new BigDecimal("150.00");
@@ -111,11 +109,11 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("РўСЂР°РЅР·Р°РєС†РёСЏ РѕС‚РјРµРЅРµРЅР°. РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ", resultUTF8);
+        assertEquals("Транзакция отменена. Недостаточно средств", resultUTF8);
     }
 
     @Test
-    public void testExecuteMoneyTransferError() {
+    void testExecuteMoneyTransferError() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
         BigDecimal amount = new BigDecimal("50.00");
@@ -131,7 +129,7 @@ public class TransactionServiceTest {
 
         String result = transactionService.executeMoneyTransfer(senderAccountId, receiverAccountNumber, amount);
         String resultUTF8 = new String(result.getBytes(), StandardCharsets.UTF_8);
-        assertEquals("Р’РѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РїСЂРё РїСЂРѕРІРµРґРµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёРё", resultUTF8);
+        assertEquals("Возникла ошибка при проведении транзакции", resultUTF8);
     }
 
 

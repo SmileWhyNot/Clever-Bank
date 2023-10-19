@@ -2,8 +2,11 @@ package vlad.kuchuk.cleverTask.presentation;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
 import vlad.kuchuk.cleverTask.service.AccountService;
@@ -20,7 +23,8 @@ import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 
-public class BankingConsoleOperationsTest {
+@ExtendWith(MockitoExtension.class)
+class BankingConsoleOperationsTest {
 
     @Mock
     private AccountService accountService;
@@ -34,16 +38,11 @@ public class BankingConsoleOperationsTest {
     @Mock
     private BankService bankService;
 
+    @InjectMocks
     private BankingConsoleOperations consoleOperations;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        consoleOperations = new BankingConsoleOperations(accountService, personService, transactionService, bankService);
-    }
-
     @Test
-    public void testSuccessfulLoginAndDeposit() {
+    void testSuccessfulLoginAndDeposit() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");
         List<Account> userAccounts = new ArrayList<>();
@@ -70,7 +69,7 @@ public class BankingConsoleOperationsTest {
     }
 
     @Test
-    public void testInvalidLogin() {
+    void testInvalidLogin() {
         // Configure mock behavior for invalid login
         when(personService.authenticate("invalid@example.com")).thenReturn(null);
 
@@ -90,7 +89,7 @@ public class BankingConsoleOperationsTest {
     }
 
     @Test
-    public void testWithdrawFunds() {
+    void testWithdrawFunds() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");
         List<Account> userAccounts = new ArrayList<>();
@@ -118,7 +117,7 @@ public class BankingConsoleOperationsTest {
     }
 
     @Test
-    public void testPerformMoneyTransfer() {
+    void testPerformMoneyTransfer() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");
         List<Account> userAccounts = new ArrayList<>();

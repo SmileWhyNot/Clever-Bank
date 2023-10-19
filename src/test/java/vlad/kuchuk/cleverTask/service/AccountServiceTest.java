@@ -8,14 +8,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.model.Account;
 
 
-public class AccountServiceTest {
+@ExtendWith(MockitoExtension.class)
+class AccountServiceTest {
 
     @InjectMocks
     private AccountService accountService;
@@ -23,13 +26,8 @@ public class AccountServiceTest {
     @Mock
     private AccountDAO accountDAO;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    public void testGetAccountsByOwner() {
+    void testGetAccountsByOwner() {
         int ownerId = 1;
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("12345", ownerId, 10));
@@ -44,7 +42,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testGetAccountDataByNumber() {
+    void testGetAccountDataByNumber() {
         String accountNumber = "12345";
         Account account = new Account(accountNumber, 1, 10);
 
@@ -57,7 +55,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testGetAccountsByOwnerWhenNoAccounts() {
+    void testGetAccountsByOwnerWhenNoAccounts() {
         int ownerId = 1;
         List<Account> emptyList = new ArrayList<>();
 

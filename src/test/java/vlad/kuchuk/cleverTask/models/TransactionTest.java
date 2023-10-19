@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TransactionTest {
+class TransactionTest {
     @Test
     void testGettersAndSetters() {
         Transaction transaction = new Transaction("Deposit", BigDecimal.valueOf(100.0)
