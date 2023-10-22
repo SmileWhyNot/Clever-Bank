@@ -1,6 +1,7 @@
 package vlad.kuchuk.cleverTask.models;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vlad.kuchuk.cleverTask.model.Account;
 
@@ -27,6 +28,7 @@ class AccountTest {
     }
 
     @Test
+    @DisplayName("AccountLockUnlock")
     void testLockAndUnlock() throws InterruptedException {
         int numThreads = 5;
         CountDownLatch latch = new CountDownLatch(numThreads);
@@ -44,6 +46,7 @@ class AccountTest {
     }
 
     @Test
+    @DisplayName("UnlockResource")
     void testUnlock() {
         Lock lock = account.getLock();
         account.lock();
@@ -53,6 +56,7 @@ class AccountTest {
     }
 
     @Test
+    @DisplayName("AccountGetters")
     void testGetters() {
         assertEquals("12345", account.getAccountNumber());
         assertEquals(BigDecimal.ZERO, account.getBalance());
@@ -60,6 +64,22 @@ class AccountTest {
         assertEquals(1, account.getPersonId());
         assertEquals(2, account.getBankId());
         assertEquals(List.of(1, 2), account.getTransactionIds());
+    }
+
+    @Test
+    @DisplayName("AccountSetters")
+    void testSetters() {
+        Account account1 = new Account("12345", 1, 2);
+        account1.setBalance(new BigDecimal(123));
+        assertEquals(123, account1.getBalance().intValueExact());
+
+        account1.setId(3);
+        assertEquals(3, account1.getId());
+
+        Date date = new Date();
+        account1.setLastInterestCalculationDate(date);
+        assertEquals(new Date(), account1.getLastInterestCalculationDate());
+
     }
 }
 

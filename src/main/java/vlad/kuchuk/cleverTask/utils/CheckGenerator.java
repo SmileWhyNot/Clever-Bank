@@ -1,5 +1,7 @@
 package vlad.kuchuk.cleverTask.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,29 +12,31 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * РљР»Р°СЃСЃ, РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅС‹Р№ РґР»СЏ РіРµРЅРµСЂР°С†РёРё Рё СЃРѕС…СЂР°РЅРµРЅРёСЏ Р±Р°РЅРєРѕРІСЃРєРёС… С‡РµРєРѕРІ РІ С„Р°Р№Р»С‹.
+ * Класс, предназначенный для генерации и сохранения банковских чеков в файлы.
  *
  * <p>
- * Р”Р»СЏ РєР°Р¶РґРѕР№ РѕРїРµСЂР°С†РёРё СЃРѕР·РґР°РµС‚СЃСЏ СѓРЅРёРєР°Р»СЊРЅС‹Р№ С‡РµРє РІ С„РѕСЂРјР°С‚Рµ С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°. Р§РµРє
- * СЃРѕРґРµСЂР¶РёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РёРїРµ С‚СЂР°РЅР·Р°РєС†РёРё, Р±Р°РЅРєР°С… РѕС‚РїСЂР°РІРёС‚РµР»СЏ Рё РїРѕР»СѓС‡Р°С‚РµР»СЏ,
- * РЅРѕРјРµСЂР°С… СЃС‡РµС‚РѕРІ РѕС‚РїСЂР°РІРёС‚РµР»СЏ Рё РїРѕР»СѓС‡Р°С‚РµР»СЏ, СЃСѓРјРјРµ Рё РІСЂРµРјРµРЅРё СЃРѕРІРµСЂС€РµРЅРёСЏ
- * С‚СЂР°РЅР·Р°РєС†РёРё.
+ * Для каждой операции создается уникальный чек в формате текстового файла. Чек
+ * содержит информацию о типе транзакции, банках отправителя и получателя,
+ * номерах счетов отправителя и получателя, сумме и времени совершения
+ * транзакции.
  */
+@UtilityClass
 public class CheckGenerator {
 
     /**
-     * Р“РµРЅРµСЂРёСЂСѓРµС‚ Рё СЃРѕС…СЂР°РЅСЏРµС‚ С‡РµРє РґР»СЏ Р±Р°РЅРєРѕРІСЃРєРѕР№ РѕРїРµСЂР°С†РёРё.
+     * Генерирует и сохраняет чек для банковской операции.
      *
-     * @param transactionType РўРёРї С‚СЂР°РЅР·Р°РєС†РёРё, РЅР°РїСЂРёРјРµСЂ, "РїРµСЂРµРІРѕРґ", "РїРѕРїРѕР»РЅРµРЅРёРµ", "СЃРЅСЏС‚РёРµ".
-     * @param senderBank      РќР°Р·РІР°РЅРёРµ Р±Р°РЅРєР° РѕС‚РїСЂР°РІРёС‚РµР»СЏ.
-     * @param receiverBank    РќР°Р·РІР°РЅРёРµ Р±Р°РЅРєР° РїРѕР»СѓС‡Р°С‚РµР»СЏ.
-     * @param senderAccount   РќРѕРјРµСЂ СЃС‡РµС‚Р° РѕС‚РїСЂР°РІРёС‚РµР»СЏ.
-     * @param receiverAccount РќРѕРјРµСЂ СЃС‡РµС‚Р° РїРѕР»СѓС‡Р°С‚РµР»СЏ.
-     * @param amount          РЎСѓРјРјР°, СЃРІСЏР·Р°РЅРЅР°СЏ СЃ С‚СЂР°РЅР·Р°РєС†РёРµР№.
+     * @param transactionType Тип транзакции, например, "перевод", "пополнение", "снятие".
+     * @param senderBank      Название банка отправителя.
+     * @param receiverBank    Название банка получателя.
+     * @param senderAccount   Номер счета отправителя.
+     * @param receiverAccount Номер счета получателя.
+     * @param amount          Сумма, связанная с транзакцией.
      */
     public static void generateCheck(String transactionType, String senderBank,
                                      String receiverBank, String senderAccount,
-                                     String receiverAccount, BigDecimal amount) {
+                                     String receiverAccount, BigDecimal amount,
+                                     String directoryPath) {
 
         String checkNumber = generateCheckNumber();
 
@@ -40,50 +44,48 @@ public class CheckGenerator {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Date currentDate = new Date();
 
-        String directoryPath = "check";
-
-        try {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath + "/" + checkNumber + ".txt"))) {
             File directory = new File(directoryPath);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath + "/" + checkNumber + ".txt"));
+
 
             writer.write("-------------------------------------------------------------");
             writer.newLine();
-            writer.write("|                      Р‘Р°РЅРєРѕРІСЃРєРёР№ Р§РµРє                        |");
+            writer.write("|                      Банковский Чек                        |");
             writer.newLine();
-            writer.write("| Р§РµРє:                                        " + new String(checkNumber.getBytes(), StandardCharsets.UTF_8) + " |");
+            writer.write("| Чек:                                        " + new String(checkNumber.getBytes(), StandardCharsets.UTF_8) + " |");
             writer.newLine();
             writer.write("| " + dateFormat.format(currentDate) + "                                        " + timeFormat.format(currentDate) + " |");
             writer.newLine();
-            writer.write("| РўРёРї С‚СЂР°РЅР·Р°РєС†РёРё:                                 " + transactionType + " |");
+            writer.write("| Тип транзакции:                                 " + transactionType + " |");
             writer.newLine();
-            writer.write("| Р‘Р°РЅРє РѕС‚РїСЂР°РІРёС‚РµР»СЏ:                          " + senderBank + " |");
+            writer.write("| Банк отправителя:                          " + senderBank + " |");
             writer.newLine();
-            writer.write("| Р‘Р°РЅРє РїРѕР»СѓС‡Р°С‚РµР»СЏ:                           " + receiverBank + " |");
+            writer.write("| Банк получателя:                           " + receiverBank + " |");
             writer.newLine();
-            writer.write("| СЃС‡РµС‚ РѕС‚РїСЂР°РІРёС‚РµР»СЏ:            " + senderAccount + " |");
+            writer.write("| счет отправителя:            " + senderAccount + " |");
             writer.newLine();
-            writer.write("| СЃС‡РµС‚ РїРѕР»СѓС‡Р°С‚РµР»СЏ:             " + receiverAccount + " |");
+            writer.write("| счет получателя:             " + receiverAccount + " |");
             writer.newLine();
-            writer.write("| РЎСѓРјРјР°:                                              " + amount + " BYN |");
+            writer.write("| Сумма:                                              " + amount + " BYN |");
             writer.newLine();
             writer.write("-------------------------------------------------------------");
 
             writer.close();
 
-            System.out.println("Р§РµРє СѓСЃРїРµС€РЅРѕ СЃС„РѕСЂРјРёСЂРѕРІР°РЅ Рё СЃРѕС…СЂР°РЅРµРЅ.");
+            System.out.println("Чек успешно сформирован и сохранен.");
         } catch (IOException e) {
-            System.err.println("РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё С‡РµРєР°: " + e.getMessage());
+            System.err.println("Ошибка при создании чека: " + e.getMessage());
         }
     }
 
     /**
-     * Р“РµРЅРµСЂРёСЂСѓРµС‚ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ С‡РµРєР° РЅР° РѕСЃРЅРѕРІРµ С‚РµРєСѓС‰РµР№ РґР°С‚С‹ Рё РІСЂРµРјРµРЅРё.
+     * Генерирует уникальный номер чека на основе текущей даты и времени.
      *
-     * @return РЈРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ С‡РµРєР°.
+     * @return Уникальный номер чека.
      */
     private static String generateCheckNumber() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");

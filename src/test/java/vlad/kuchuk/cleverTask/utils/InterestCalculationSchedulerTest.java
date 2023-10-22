@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.utils;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +31,8 @@ class InterestCalculationSchedulerTest {
 
 
     @Test
-    void testStartAndStopInterestCalculation() throws InterruptedException {
+    @DisplayName("startStopInterestCalculation")
+    void testStartAndStopInterestCalculation() {
         scheduler.startInterestCalculation(60);
 
         verify(executorService).scheduleAtFixedRate(any(Runnable.class), Mockito.eq(0L), Mockito.eq(60L), Mockito.eq(TimeUnit.SECONDS));

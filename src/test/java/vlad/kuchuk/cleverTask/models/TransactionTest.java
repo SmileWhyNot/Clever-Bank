@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.models;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vlad.kuchuk.cleverTask.model.Transaction;
 
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TransactionTest {
     @Test
+    @DisplayName("TransactionGettersSetters")
     void testGettersAndSetters() {
         Transaction transaction = new Transaction("Deposit", BigDecimal.valueOf(100.0)
                 , Timestamp.valueOf("2023-08-29 12:00:00"), 101, 102);

@@ -168,7 +168,7 @@ public class BankingConsoleOperations {
 
         String senderBankName = bankService.getBankNameByAccountNumber(selectedAccount.getAccountNumber());
         CheckGenerator.generateCheck("Пополнение", senderBankName, senderBankName,
-                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount);
+                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount, "check");
         System.out.println("Счет успешно пополнен.");
     }
 
@@ -195,7 +195,7 @@ public class BankingConsoleOperations {
 
         String senderBankName = bankService.getBankNameByAccountNumber(selectedAccount.getAccountNumber());
         CheckGenerator.generateCheck("Снятие", senderBankName, senderBankName,
-                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount);
+                selectedAccount.getAccountNumber(), selectedAccount.getAccountNumber(), amount, "check");
         System.out.println("Средства успешно сняты со счета.");
     }
 
@@ -228,7 +228,7 @@ public class BankingConsoleOperations {
         String receiverBankName = bankService.getBankNameByAccountNumber(receiverAccount.getAccountNumber());
 
         CheckGenerator.generateCheck("Перевод", senderBankName, receiverBankName,
-                senderAccount.getAccountNumber(), receiverAccount.getAccountNumber(), amount);
+                senderAccount.getAccountNumber(), receiverAccount.getAccountNumber(), amount, "check");
         System.out.println(result);
     }
 }

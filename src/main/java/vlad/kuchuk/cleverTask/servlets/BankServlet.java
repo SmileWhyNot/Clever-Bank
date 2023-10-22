@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * РљР»Р°СЃСЃ BankServlet РїСЂРµРґСЃС‚Р°РІР»СЏРµС‚ СЃРµСЂРІР»РµС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РѕРїРµСЂР°С†РёСЏРјРё СЃ Р±Р°РЅРєР°РјРё.
- * РћРЅ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP GET Рё POST Р·Р°РїСЂРѕСЃС‹, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ Р±Р°РЅРєР°РјРё, С‚Р°РєРёРµ РєР°Рє РїРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° Р±Р°РЅРєРѕРІ,
- * РїРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РєРѕРЅРєСЂРµС‚РЅРѕРј Р±Р°РЅРєРµ, СЃРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ Р±Р°РЅРєР°, РѕР±РЅРѕРІР»РµРЅРёРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ Р±Р°РЅРєР° Рё СѓРґР°Р»РµРЅРёРµ Р±Р°РЅРєР°.
+ * Класс BankServlet представляет сервлет для управления операциями с банками.
+ * Он обрабатывает HTTP GET и POST запросы, связанные с банками, такие как получение списка банков,
+ * получение информации о конкретном банке, создание нового банка, обновление существующего банка и удаление банка.
  */
 @WebServlet("/bank")
 public class BankServlet extends HttpServlet {
@@ -26,10 +26,10 @@ public class BankServlet extends HttpServlet {
     private BankService bankService;
 
     /**
-     * РњРµС‚РѕРґ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРµСЂРІР»РµС‚Р°, РєРѕС‚РѕСЂС‹Р№ СЃРѕР·РґР°РµС‚ СЌРєР·РµРјРїР»СЏСЂС‹ BankService Рё BankDAO РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёР№ СЃ Р±Р°РЅРєР°РјРё.
+     * Метод инициализации сервлета, который создает экземпляры BankService и BankDAO для выполнения операций с банками.
      *
-     * @param config РћР±СЉРµРєС‚, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЋС‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕРЅС„РёРіСѓСЂР°С†РёРё СЃРµСЂРІР»РµС‚Р°.
-     * @throws ServletException Р•СЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРµСЂРІР»РµС‚Р°.
+     * @param config Объект, предоставляющий информацию о конфигурации сервлета.
+     * @throws ServletException Если возникает ошибка при инициализации сервлета.
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -39,11 +39,11 @@ public class BankServlet extends HttpServlet {
     }
 
     /**
-     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP GET Р·Р°РїСЂРѕСЃС‹, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ РѕРїРµСЂР°С†РёСЏРјРё СЃ Р±Р°РЅРєР°РјРё.
+     * Обрабатывает HTTP GET запросы, связанные с операциями с банками.
      *
-     * @param request  РћР±СЉРµРєС‚ HttpServletRequest, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ HTTP Р·Р°РїСЂРѕСЃ.
-     * @param response РћР±СЉРµРєС‚ HttpServletResponse, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ HTTP РѕС‚РІРµС‚.
-     * @throws IOException      Р•СЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РІРІРѕРґР°/РІС‹РІРѕРґР° РїСЂРё РѕС‚РїСЂР°РІРєРµ РѕС‚РІРµС‚Р°.
+     * @param request  Объект HttpServletRequest, представляющий HTTP запрос.
+     * @param response Объект HttpServletResponse, представляющий HTTP ответ.
+     * @throws IOException      Если возникает ошибка ввода/вывода при отправке ответа.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -63,10 +63,10 @@ public class BankServlet extends HttpServlet {
     }
 
     /**
-     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ HTTP POST Р·Р°РїСЂРѕСЃС‹, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ РѕРїРµСЂР°С†РёСЏРјРё СЃРѕР·РґР°РЅРёСЏ, РѕР±РЅРѕРІР»РµРЅРёСЏ Рё СѓРґР°Р»РµРЅРёСЏ Р±Р°РЅРєРѕРІ.
+     * Обрабатывает HTTP POST запросы, связанные с операциями создания, обновления и удаления банков.
      *
-     * @param request  РћР±СЉРµРєС‚ HttpServletRequest, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ HTTP Р·Р°РїСЂРѕСЃ.
-     * @param response РћР±СЉРµРєС‚ HttpServletResponse, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ HTTP РѕС‚РІРµС‚.
+     * @param request  Объект HttpServletRequest, представляющий HTTP запрос.
+     * @param response Объект HttpServletResponse, представляющий HTTP ответ.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {

@@ -6,12 +6,11 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.dao.TransactionDAO;
@@ -30,6 +29,7 @@ class TransactionServiceTest {
     private TransactionDAO transactionDAO;
 
     @Test
+    @DisplayName("shouldDepositMoney")
     void testDepositMoney() {
         String accountNumber = "12345";
         BigDecimal initialBalance = new BigDecimal("100.00");
@@ -46,6 +46,7 @@ class TransactionServiceTest {
     }
 
     @Test
+    @DisplayName("shouldWithdrawMoney")
     void testWithdrawMoney() {
         int accountId = 1;
         BigDecimal initialBalance = new BigDecimal("100.00");
@@ -61,6 +62,7 @@ class TransactionServiceTest {
     }
 
     @Test
+    @DisplayName("shouldExecuteMoney")
     void testExecuteMoneyTransferSuccessful() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
@@ -81,6 +83,7 @@ class TransactionServiceTest {
     }
 
     @Test
+    @DisplayName("failedMoneyTransferNoAccount")
     void testExecuteMoneyTransferAccountNotFound() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
@@ -95,6 +98,7 @@ class TransactionServiceTest {
     }
 
     @Test
+    @DisplayName("failedMoneyTransferInsufficientFunds")
     void testExecuteMoneyTransferInsufficientFunds() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";
@@ -113,6 +117,7 @@ class TransactionServiceTest {
     }
 
     @Test
+    @DisplayName("failedMoneyTransfer")
     void testExecuteMoneyTransferError() {
         int senderAccountId = 1;
         String receiverAccountNumber = "54321";

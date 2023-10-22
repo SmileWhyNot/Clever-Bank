@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.models;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vlad.kuchuk.cleverTask.model.Bank;
 
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BankTest {
 
     @Test
+    @DisplayName("BankGettersSetters")
     void testGettersAndSetters() {
         Bank bank = new Bank("MyBank");
 

@@ -3,12 +3,11 @@ package vlad.kuchuk.cleverTask.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.dao.PersonDAO;
 import vlad.kuchuk.cleverTask.model.Person;
@@ -23,6 +22,7 @@ class PersonServiceTest {
     private PersonDAO personDAO;
 
     @Test
+    @DisplayName("shouldAuthenticateWithEmail")
     void testAuthenticateWithValidEmail() {
         String validEmail = "john.doe@example.com";
         Person person = new Person(validEmail, "John Doe");
@@ -36,6 +36,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @DisplayName("tryAuthenticateInvalidEmail")
     void testAuthenticateWithInvalidEmail() {
         String invalidEmail = "nonexistent@example.com";
 

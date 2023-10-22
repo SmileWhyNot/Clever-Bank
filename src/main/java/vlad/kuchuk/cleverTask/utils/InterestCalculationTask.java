@@ -71,7 +71,7 @@ public class InterestCalculationTask implements Runnable{
                     Bank personsBank = bankDAO.getBankNameByAccountNumber(account.getAccountNumber());
                     CheckGenerator.generateCheck("Пополнение", personsBank.getName()
                             , personsBank.getName(), account.getAccountNumber()
-                            , account.getAccountNumber(), interest);
+                            , account.getAccountNumber(), interest, "check");
 
                     account.setLastInterestCalculationDate(currentDate);
                     java.sql.Date curSQLDate = new java.sql.Date(currentDate.getTime());

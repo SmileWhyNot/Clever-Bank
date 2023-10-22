@@ -1,11 +1,10 @@
 package vlad.kuchuk.cleverTask.presentation;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vlad.kuchuk.cleverTask.model.Account;
 import vlad.kuchuk.cleverTask.model.Person;
@@ -42,6 +41,7 @@ class BankingConsoleOperationsTest {
     private BankingConsoleOperations consoleOperations;
 
     @Test
+    @DisplayName("isSuccessfulLoginAndDeposit")
     void testSuccessfulLoginAndDeposit() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");
@@ -69,6 +69,7 @@ class BankingConsoleOperationsTest {
     }
 
     @Test
+    @DisplayName("invalidLogin")
     void testInvalidLogin() {
         // Configure mock behavior for invalid login
         when(personService.authenticate("invalid@example.com")).thenReturn(null);
@@ -89,6 +90,7 @@ class BankingConsoleOperationsTest {
     }
 
     @Test
+    @DisplayName("shouldWithdrawFunds")
     void testWithdrawFunds() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");
@@ -117,6 +119,7 @@ class BankingConsoleOperationsTest {
     }
 
     @Test
+    @DisplayName("shouldPerformMoney")
     void testPerformMoneyTransfer() {
         // Prepare test data
         Person user = new Person("User", "user@example.com");

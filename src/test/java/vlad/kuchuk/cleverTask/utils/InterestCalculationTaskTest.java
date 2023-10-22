@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.utils;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
@@ -14,6 +15,7 @@ import java.util.Collections;
 class InterestCalculationTaskTest {
 
     @Test
+    @DisplayName("interestCalculationNullDate")
     void testInterestCalculationWhenLastCalculationDateIsNull() {
         AccountDAO accountDAO = Mockito.mock(AccountDAO.class);
         BankDAO bankDAO = Mockito.mock(BankDAO.class);
@@ -38,6 +40,7 @@ class InterestCalculationTaskTest {
     }
 
     @Test
+    @DisplayName("interestCalculationPrevMonthDate")
     void testInterestCalculationWhenLastCalculationDateIsInPreviousMonth() {
         AccountDAO accountDAO = Mockito.mock(AccountDAO.class);
         BankDAO bankDAO = Mockito.mock(BankDAO.class);
@@ -48,7 +51,7 @@ class InterestCalculationTaskTest {
         account.setId(1);
         account.setBalance(BigDecimal.valueOf(100.00));
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1); // РџРµСЂРµР№С‚Рё РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ РјРµСЃСЏС†
+        calendar.add(Calendar.MONTH, -1); // Перейти на предыдущий месяц
         account.setLastInterestCalculationDate(calendar.getTime());
         Bank bank = new Bank("Bank");
         bank.setId(1);
@@ -65,6 +68,7 @@ class InterestCalculationTaskTest {
     }
 
     @Test
+    @DisplayName("interestCalculationCurMonthDate")
     void testInterestCalculationWhenLastCalculationDateIsInCurrentMonth() {
         AccountDAO accountDAO = Mockito.mock(AccountDAO.class);
         BankDAO bankDAO = Mockito.mock(BankDAO.class);

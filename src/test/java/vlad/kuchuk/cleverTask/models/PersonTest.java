@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.models;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vlad.kuchuk.cleverTask.model.Person;
 
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PersonTest {
 
     @Test
+    @DisplayName("PersonGettersSetters")
     void testGettersAndSetters() {
         Person person = new Person("John Doe", "john@example.com");
 
