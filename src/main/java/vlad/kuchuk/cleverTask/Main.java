@@ -13,6 +13,8 @@ import vlad.kuchuk.cleverTask.service.TransactionService;
 import vlad.kuchuk.cleverTask.utils.InterestCalculationScheduler;
 import vlad.kuchuk.cleverTask.utils.YamlReader;
 
+import java.util.Scanner;
+
 /**
  * Главный класс приложения, который запускает его и управляет основными компонентами.
  * Включает в себя инициализацию DAO классов, настройку сервисов и запуск задачи начисления процентов.
@@ -46,7 +48,7 @@ public class Main {
                 new BankingConsoleOperations(accountService, personService, transactionService, bankService);
 
         try {
-            bankingConsoleOperations.start();
+            bankingConsoleOperations.start(new Scanner(System.in));
         } finally {
             DatabaseConnection.closeConnection();
             scheduler.stopInterestCalculation();

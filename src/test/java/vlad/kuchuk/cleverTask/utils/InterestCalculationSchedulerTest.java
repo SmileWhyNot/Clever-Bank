@@ -35,7 +35,8 @@ class InterestCalculationSchedulerTest {
     void testStartAndStopInterestCalculation() {
         scheduler.startInterestCalculation(60);
 
-        verify(executorService).scheduleAtFixedRate(any(Runnable.class), Mockito.eq(0L), Mockito.eq(60L), Mockito.eq(TimeUnit.SECONDS));
+        verify(executorService).scheduleAtFixedRate(any(Runnable.class),
+                Mockito.eq(0L), Mockito.eq(60L), Mockito.eq(TimeUnit.SECONDS));
 
         scheduler.stopInterestCalculation();
 

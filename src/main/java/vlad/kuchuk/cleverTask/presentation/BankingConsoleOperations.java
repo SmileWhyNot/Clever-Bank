@@ -43,25 +43,8 @@ public class BankingConsoleOperations {
     }
 
     /**
-     * Запускает консольное приложение банка.
-     */
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
-        Person currentUser = login(scanner);
-
-        if (currentUser != null) {
-            System.out.println("Добро пожаловать, " + currentUser.getName() + "!");
-            handleUserOperations(currentUser, scanner);
-        } else {
-            System.out.println("Ошибка аутентификации. Попробуйте снова или выйдите из системы.");
-        }
-    }
-
-    /**
      * Запускает консольное приложение банка с использованием заданного объекта Scanner.
      * <p>
-     * Используется для тестирования
-     *
      * @param scanner Объект Scanner для ввода пользовательских данных.
      */
     public void start(Scanner scanner) {

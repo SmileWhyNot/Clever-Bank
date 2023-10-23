@@ -2,12 +2,15 @@ package vlad.kuchuk.cleverTask.utils;
 
 import java.io.InputStream;
 import java.util.Map;
+
+import lombok.experimental.UtilityClass;
 import org.yaml.snakeyaml.Yaml;
 
 /**
  * Класс YamlReader используется для получения значений из YAML-файла конфигурации.
  * Он загружает значения из файла "application.yml" и предоставляет методы для доступа к значениям по ключам.
  */
+@UtilityClass
 public class YamlReader {
 
     /** Имя файла конфигурации. */

@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.database;
 
+import lombok.experimental.UtilityClass;
 import vlad.kuchuk.cleverTask.utils.YamlReader;
 
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
  * соединения с базой данных. Соединение с базой данных инициализируется при первом
  * вызове метода getConnection() и закрывается при вызове метода closeConnection().
  */
+@UtilityClass
 public class DatabaseConnection {
 
     /** Соединение с базой данных. */

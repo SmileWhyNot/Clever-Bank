@@ -4,13 +4,14 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
- * Класс, представляющий банковскую транзакцию.
+ * РљР»Р°СЃСЃ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ Р±Р°РЅРєРѕРІСЃРєСѓСЋ С‚СЂР°РЅР·Р°РєС†РёСЋ.
  *
  * <p>
- * Каждая транзакция имеет уникальный идентификатор, тип транзакции, сумму,
- * временную метку, идентификатор счета отправителя и идентификатор счета получателя.
+ * РљР°Р¶РґР°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ РёРјРµРµС‚ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ, С‚РёРї С‚СЂР°РЅР·Р°РєС†РёРё, СЃСѓРјРјСѓ,
+ * РІСЂРµРјРµРЅРЅСѓСЋ РјРµС‚РєСѓ, РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‡РµС‚Р° РѕС‚РїСЂР°РІРёС‚РµР»СЏ Рё РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‡РµС‚Р° РїРѕР»СѓС‡Р°С‚РµР»СЏ.
  */
 @Data
 public class Transaction {
@@ -20,4 +21,17 @@ public class Transaction {
     private final Timestamp timestamp;
     private final int senderAccountId;
     private final int receiverAccountId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return id == that.id && senderAccountId == that.senderAccountId && receiverAccountId == that.receiverAccountId && Objects.equals(transactionType, that.transactionType) && Objects.equals(amount, that.amount) && Objects.equals(timestamp, that.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, amount, timestamp, senderAccountId, receiverAccountId);
+    }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -43,4 +44,16 @@ public class Account {
         lock.unlock();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id == account.id && personId == account.personId && bankId == account.bankId && Objects.equals(accountNumber, account.accountNumber) && Objects.equals(balance, account.balance) && Objects.equals(lastInterestCalculationDate, account.lastInterestCalculationDate) && Objects.equals(transactionIds, account.transactionIds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, accountNumber, balance, lastInterestCalculationDate);
+    }
 }

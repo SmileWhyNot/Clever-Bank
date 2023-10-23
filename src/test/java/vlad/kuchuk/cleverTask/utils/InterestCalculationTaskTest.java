@@ -51,7 +51,7 @@ class InterestCalculationTaskTest {
         account.setId(1);
         account.setBalance(BigDecimal.valueOf(100.00));
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1); // Перейти на предыдущий месяц
+        calendar.add(Calendar.MONTH, -1); // РџРµСЂРµР№С‚Рё РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ РјРµСЃСЏС†
         account.setLastInterestCalculationDate(calendar.getTime());
         Bank bank = new Bank("Bank");
         bank.setId(1);

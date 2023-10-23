@@ -24,9 +24,9 @@ class CheckGeneratorTest {
     @Test
     @DisplayName("shouldGenerateCheck")
     void testGenerateCheck() throws IOException {
-        String transactionType = "перевод";
-        String senderBank = "Банк1";
-        String receiverBank = "Банк2";
+        String transactionType = "РїРµСЂРµРІРѕРґ";
+        String senderBank = "Р‘Р°РЅРє1";
+        String receiverBank = "Р‘Р°РЅРє2";
         String senderAccount = "12345";
         String receiverAccount = "54321";
         BigDecimal amount = new BigDecimal("100.00");

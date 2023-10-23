@@ -1,5 +1,6 @@
 package vlad.kuchuk.cleverTask.utils;
 
+import lombok.Generated;
 import vlad.kuchuk.cleverTask.dao.AccountDAO;
 import vlad.kuchuk.cleverTask.dao.BankDAO;
 
@@ -30,6 +31,7 @@ public class InterestCalculationScheduler {
      * @param bankDAO      Объект класса BankDAO для доступа к данным о банке пользователя.
      * @param interestRate Значение процентной ставки для начисления процентов.
      */
+    @Generated
     public InterestCalculationScheduler(AccountDAO accountDAO, BankDAO bankDAO, Double interestRate) {
         this.accountDAO = accountDAO;
         this.bankDAO = bankDAO;

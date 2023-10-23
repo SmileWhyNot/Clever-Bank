@@ -10,6 +10,7 @@ import vlad.kuchuk.cleverTask.dao.PersonDAO;
 import vlad.kuchuk.cleverTask.database.DatabaseConnection;
 import vlad.kuchuk.cleverTask.model.Person;
 import vlad.kuchuk.cleverTask.service.PersonService;
+import vlad.kuchuk.cleverTask.utils.YamlReader;
 
 import java.io.IOException;
 import java.util.List;

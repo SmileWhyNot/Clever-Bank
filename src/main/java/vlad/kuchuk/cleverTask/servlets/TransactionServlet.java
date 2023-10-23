@@ -12,6 +12,7 @@ import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.database.DatabaseConnection;
 import vlad.kuchuk.cleverTask.model.Transaction;
 import vlad.kuchuk.cleverTask.service.TransactionService;
+import vlad.kuchuk.cleverTask.utils.YamlReader;
 
 import java.io.IOException;
 import java.math.BigDecimal;

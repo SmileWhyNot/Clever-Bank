@@ -3,13 +3,14 @@ package vlad.kuchuk.cleverTask.model;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Класс, представляющий физическое лицо в банковской системе.
+ * РљР»Р°СЃСЃ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ С„РёР·РёС‡РµСЃРєРѕРµ Р»РёС†Рѕ РІ Р±Р°РЅРєРѕРІСЃРєРѕР№ СЃРёСЃС‚РµРјРµ.
  *
  * <p>
- * Каждое физическое лицо имеет уникальный идентификатор, имя, электронную почту
- * и список идентификаторов счетов, принадлежащих этому лицу.
+ * РљР°Р¶РґРѕРµ С„РёР·РёС‡РµСЃРєРѕРµ Р»РёС†Рѕ РёРјРµРµС‚ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ, РёРјСЏ, СЌР»РµРєС‚СЂРѕРЅРЅСѓСЋ РїРѕС‡С‚Сѓ
+ * Рё СЃРїРёСЃРѕРє РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ СЃС‡РµС‚РѕРІ, РїСЂРёРЅР°РґР»РµР¶Р°С‰РёС… СЌС‚РѕРјСѓ Р»РёС†Сѓ.
  */
 @Data
 public class Person {
@@ -17,4 +18,17 @@ public class Person {
     private final String name;
     private final String email;
     private List<Integer> accountIds;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(name, person.name) && Objects.equals(email, person.email) && Objects.equals(accountIds, person.accountIds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email);
+    }
 }
