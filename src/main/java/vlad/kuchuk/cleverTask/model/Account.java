@@ -1,5 +1,8 @@
 package vlad.kuchuk.cleverTask.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -34,6 +37,16 @@ public class Account {
     private final int bankId;
     private List<Integer> transactionIds;
 
+    @JsonCreator
+    public Account(@JsonProperty("accountNumber") String accountNumber,
+                   @JsonProperty("personId") int personId,
+                   @JsonProperty("bankId") int bankId) {
+        this.accountNumber = accountNumber;
+        this.personId = personId;
+        this.bankId = bankId;
+    }
+
+    @JsonIgnore
     private final Lock lock = new ReentrantLock();
 
     public void lock() {

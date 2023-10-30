@@ -1,5 +1,7 @@
 package vlad.kuchuk.cleverTask.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -18,6 +20,22 @@ public class Person {
     private final String name;
     private final String email;
     private List<Integer> accountIds;
+
+    public Person(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    @JsonCreator
+    public Person(@JsonProperty("id") int id,
+                  @JsonProperty("name") String name,
+                  @JsonProperty("email") String email,
+                  @JsonProperty("accountIds") List<Integer> accountIds) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.accountIds = accountIds;
+    }
 
     @Override
     public boolean equals(Object o) {

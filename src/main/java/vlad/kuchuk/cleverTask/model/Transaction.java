@@ -1,5 +1,7 @@
 package vlad.kuchuk.cleverTask.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -21,6 +23,29 @@ public class Transaction {
     private final Timestamp timestamp;
     private final int senderAccountId;
     private final int receiverAccountId;
+
+    public Transaction(String transactionType, BigDecimal amount, Timestamp timestamp, int senderAccountId, int receiverAccountId) {
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.timestamp = timestamp;
+        this.senderAccountId = senderAccountId;
+        this.receiverAccountId = receiverAccountId;
+    }
+
+    @JsonCreator
+    public Transaction(@JsonProperty("id") int id,
+                       @JsonProperty("transactionType") String transactionType,
+                       @JsonProperty("amount") BigDecimal amount,
+                       @JsonProperty("timestamp") Timestamp timestamp,
+                       @JsonProperty("senderAccountId") int senderAccountId,
+                       @JsonProperty("receiverAccountId") int receiverAccountId) {
+        this.id = id;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.timestamp = timestamp;
+        this.senderAccountId = senderAccountId;
+        this.receiverAccountId = receiverAccountId;
+    }
 
     @Override
     public boolean equals(Object o) {
