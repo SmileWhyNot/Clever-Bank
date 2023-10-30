@@ -135,7 +135,7 @@ public class TransactionService {
      * @param updatedTransaction Обновленные данные транзакции.
      * @param transactionId      Идентификатор транзакции, которую необходимо обновить.
      */
-    public void updatePersonById(Transaction updatedTransaction, int transactionId) {
+    public void updateTransactionById(Transaction updatedTransaction, int transactionId) {
         transactionDAO.updateTransaction(updatedTransaction, transactionId);
     }
 

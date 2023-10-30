@@ -12,7 +12,6 @@ import vlad.kuchuk.cleverTask.dao.TransactionDAO;
 import vlad.kuchuk.cleverTask.database.DatabaseConnection;
 import vlad.kuchuk.cleverTask.model.Transaction;
 import vlad.kuchuk.cleverTask.service.TransactionService;
-import vlad.kuchuk.cleverTask.utils.YamlReader;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -85,7 +84,7 @@ public class TransactionServlet extends HttpServlet {
             case "update" -> {
                 Transaction updatedTransaction = getTransactionWithParams(request);
                 int transactionId = Integer.parseInt(request.getParameter("id"));
-                transactionService.updatePersonById(updatedTransaction, transactionId);
+                transactionService.updateTransactionById(updatedTransaction, transactionId);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
             case "delete" -> {
