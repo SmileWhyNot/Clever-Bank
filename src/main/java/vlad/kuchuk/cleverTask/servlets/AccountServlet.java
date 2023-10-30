@@ -90,6 +90,7 @@ public class AccountServlet extends HttpServlet {
                 accountService.deleteAccountById(accountId);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
+            default -> response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }

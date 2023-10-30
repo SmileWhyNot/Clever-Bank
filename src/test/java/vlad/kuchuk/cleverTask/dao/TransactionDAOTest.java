@@ -33,7 +33,7 @@ class TransactionDAOTest {
     @Test
     @DisplayName("saveTransaction")
     void testSaveTransaction() throws SQLException {
-        Transaction transaction = new Transaction("Transfer", new BigDecimal(100.00), new Timestamp(System.currentTimeMillis()), 1, 2);
+        Transaction transaction = new Transaction("Transfer", new BigDecimal("100.00"), new Timestamp(System.currentTimeMillis()), 1, 2);
 
         when(connection.prepareStatement(any(String.class))).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
@@ -51,7 +51,7 @@ class TransactionDAOTest {
 
         when(resultSet.next()).thenReturn(true, true, false);
         when(resultSet.getString("transaction_type")).thenReturn("Transfer", "Payment");
-        when(resultSet.getBigDecimal("amount")).thenReturn(new BigDecimal(100.00), new BigDecimal(50.00));
+        when(resultSet.getBigDecimal("amount")).thenReturn(new BigDecimal("100.00"), new BigDecimal("50.00"));
         when(resultSet.getTimestamp("timestamp")).thenReturn(new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
         when(resultSet.getInt("sender_account_id")).thenReturn(1, 2);
         when(resultSet.getInt("receiver_account_id")).thenReturn(2, 3);
@@ -61,7 +61,7 @@ class TransactionDAOTest {
         assertEquals(2, transactions.size());
         Transaction transaction = transactions.get(0);
         assertEquals("Transfer", transaction.getTransactionType());
-        assertEquals(new BigDecimal(100.00), transaction.getAmount());
+        assertEquals(new BigDecimal("100.00"), transaction.getAmount());
         assertEquals(1, transaction.getSenderAccountId());
         assertEquals(2, transaction.getReceiverAccountId());
     }
@@ -72,9 +72,9 @@ class TransactionDAOTest {
         when(connection.prepareStatement(any(String.class))).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        when(resultSet.next()).thenReturn(true); // Первая запись
+        when(resultSet.next()).thenReturn(true);
         when(resultSet.getString("transaction_type")).thenReturn("Transfer");
-        when(resultSet.getBigDecimal("amount")).thenReturn(new BigDecimal(100.00));
+        when(resultSet.getBigDecimal("amount")).thenReturn(new BigDecimal("100.00"));
         when(resultSet.getTimestamp("timestamp")).thenReturn(new Timestamp(System.currentTimeMillis()));
         when(resultSet.getInt("sender_account_id")).thenReturn(1);
         when(resultSet.getInt("receiver_account_id")).thenReturn(2);
@@ -83,7 +83,7 @@ class TransactionDAOTest {
 
         assertNotNull(transaction);
         assertEquals("Transfer", transaction.getTransactionType());
-        assertEquals(new BigDecimal(100.00), transaction.getAmount());
+        assertEquals(new BigDecimal("100.00"), transaction.getAmount());
         assertEquals(1, transaction.getSenderAccountId());
         assertEquals(2, transaction.getReceiverAccountId());
     }

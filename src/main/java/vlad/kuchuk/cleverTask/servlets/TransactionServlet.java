@@ -92,6 +92,7 @@ public class TransactionServlet extends HttpServlet {
                 transactionService.deleteTransaction(transactionId);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
+            default -> response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
